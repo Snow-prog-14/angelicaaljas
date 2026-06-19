@@ -1,6 +1,6 @@
 import image_ikang from '@/imports/ikang.jpg'
 import { useState, useEffect, useRef, FormEvent } from "react";
-import { motion, useInView, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { motion, useInView, AnimatePresence, useScroll, useTransform, Variants } from "motion/react";
 import {
   Mail, Instagram, Linkedin, Twitter,
   Star, Check, ArrowRight, Menu, X, ChevronLeft, ChevronRight,
@@ -430,8 +430,8 @@ function Hero() {
   const blob2Y = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const textY   = useTransform(scrollYProgress, [0, 1], [0, 40]);
 
-  // Motion variants for viewport scroll entry & exit animations
-  const gridVariants = {
+  // Framer Motion strictly typed variants to resolve type union constraints
+  const gridVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -441,7 +441,7 @@ function Hero() {
     },
   };
 
-  const copyContainerVariants = {
+  const copyContainerVariants: Variants = {
     hidden: {},
     visible: {
       transition: {
@@ -450,37 +450,37 @@ function Hero() {
     },
   };
 
-  const badgeVariants = {
+  const badgeVariants: Variants = {
     hidden: { opacity: 0, y: 16 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
-  const subtitleVariants = {
+  const subtitleVariants: Variants = {
     hidden: { y: "100%", opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { duration: 0.6 } }
   };
 
-  const h1Variants = {
+  const h1Variants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
   };
 
-  const bodyVariants = {
+  const bodyVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
-  const buttonsVariants = {
+  const buttonsVariants: Variants = {
     hidden: { opacity: 0, y: 16 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.55 } }
   };
 
-  const statsVariants = {
+  const statsVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.6 } }
   };
 
-  const portraitVariants = {
+  const portraitVariants: Variants = {
     hidden: { opacity: 0, scale: 0.92 },
     visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeOut" } },
   };
@@ -772,7 +772,7 @@ function Projects() {
           {PROJECTS.map((p, i) => (
             <motion.div 
               key={i}
-              className={`grid lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? 'lg:direction-rtl' : ''}`}
+              className={`grid lg:grid-cols-2 gap-12 items-center`}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
