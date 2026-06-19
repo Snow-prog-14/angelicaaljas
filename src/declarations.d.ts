@@ -1,9 +1,5 @@
-// src/declarations.d.ts
-declare module '*.jpg' {
-  const value: string;
-  return value;
-}
-declare module '*.png' {
-  const value: string;
-  return value;
-}
+declare module "*.jpg";
+declare module "*.jpeg";
+declare module "*.png";
+declare module "*.gif";
+declare module "*.webp";

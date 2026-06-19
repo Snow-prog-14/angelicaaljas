@@ -1,5 +1,5 @@
-import image_ikang from '@/imports/ikang.jpg';
-import { useState, useEffect, useRef, FormEvent } from "react";
+import image_ikang from "../imports/ikang.jpg";
+import React, { useState, useEffect, useRef, FormEvent } from "react";
 import { motion, useInView, AnimatePresence, useScroll, useTransform } from "motion/react";
 import {
   Mail, Instagram, Linkedin, Twitter,
@@ -805,83 +805,110 @@ function Testimonials() {
 // CONTACT
 // ─────────────────────────────────────────────
 function Contact() {
-  const [sent, setSent] = useState(false);
-  
-  const handleFormSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
-  };
+    return (
+    <section className="py-20 px-6 lg:px-20 bg-white">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start">
+        
+        {/* Left Side: Text and Details */}
+        <div>
+          <p className="text-pink-600 font-medium tracking-widest text-sm uppercase mb-4">
+            ✨ Get in touch ✨
+          </p>
+          <h2 className="text-5xl md:text-6xl font-serif text-slate-900 mb-6 leading-tight">
+            Let's Build Something <span className="text-pink-600 italic">Amazing Together</span>
+          </h2>
+          <p className="text-slate-600 mb-10 text-lg">
+            Ready to reclaim your time and scale your business? I would love to learn about your goals and show you exactly how I can help.
+          </p>
 
-  return (
-    <section id="contact" className="py-28 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="grid lg:grid-cols-2 gap-16">
-          
-          <div>
-            <EyebrowLabel text="Get In Touch" />
-            <h2 className="text-4xl font-semibold text-slate-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Optimize Your Clinical Workflow Today
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-md">
-              Ready to reduce your administrative charting backlog or coordinate prior authorizations effectively? Send a secure inquiry note, and let's set up a discovery consultation call.
-            </p>
-
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-100 shadow-sm max-w-sm">
-                <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600 shrink-0">
-                  <Mail size={18} />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Email Communication</p>
-                  <p className="text-xs font-semibold text-slate-700">angelicaaljas.mva@gmail.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-100 shadow-sm max-w-sm">
-                <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600 shrink-0">
-                  <Shield size={18} />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Compliance Status</p>
-                  <p className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
-                    <Check size={12} /> 100% HIPAA Standard Aligned
-                  </p>
-                </div>
+          {/* Contact Details List */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-pink-50 text-pink-600 flex items-center justify-center">📧</div>
+              <div>
+                <p className="text-xs text-slate-400 uppercase tracking-wider">Email</p>
+                <p className="font-medium">hello@angelicaaljas.com</p>
               </div>
             </div>
+            {/* Dagdagan ng katulad na blocks para sa Response Time at Location */}
           </div>
+        </div>
 
-          {/* Form Side */}
-          <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-md relative">
-            <form onSubmit={handleFormSubmit} className="space-y-5">
+        {/* Right Side: Form */}
+        <div className="bg-pink-50 p-8 rounded-3xl">
+          <form className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Full Name / Clinic Provider</label>
-                <input type="text" required placeholder="Dr. Alex Mercer" className="w-full text-xs px-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300/50 transition-all text-slate-800" />
+                <label className="block text-xs font-bold text-pink-700 uppercase mb-2">Full Name</label>
+                <input className="w-full p-3 rounded-lg border-none bg-white shadow-sm" placeholder="Jane Smith" />
               </div>
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Professional Email Address</label>
-                <input type="email" required placeholder="mercer@familypractice.com" className="w-full text-xs px-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300/50 transition-all text-slate-800" />
+                <label className="block text-xs font-bold text-pink-700 uppercase mb-2">Email Address</label>
+                <input className="w-full p-3 rounded-lg border-none bg-white shadow-sm" placeholder="jane@company.com" />
               </div>
-              <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Practice Requirements Description</label>
-                <textarea rows={4} required placeholder="Tell me about your scheduling or prior authorization workflows..." className="w-full text-xs px-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300/50 transition-all text-slate-800 resize-none"></textarea>
-              </div>
+            </div>
+            
+            <div>
+              <label className="block text-xs font-bold text-pink-700 uppercase mb-2">Service Needed</label>
+              <select className="w-full p-3 rounded-lg border-none bg-white shadow-sm text-slate-500">
+                <option>Select a service...</option>
+              </select>
+            </div>
 
-              <button 
-                type="submit" 
-                className="w-full py-4 rounded-xl font-medium text-xs tracking-wide text-white transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                style={{ background: PINK_GRAD }}
-              >
-                {sent ? "Message Sent Securely!" : "Submit Inquiry Details"} 
-                <Send size={13} className={sent ? "animate-ping" : ""} />
-              </button>
-            </form>
-          </div>
+            <div>
+              <label className="block text-xs font-bold text-pink-700 uppercase mb-2">Tell me about your business</label>
+              <textarea className="w-full p-3 rounded-lg border-none bg-white shadow-sm h-32" placeholder="Share a bit about your business..." />
+            </div>
 
+            <button className="w-full bg-pink-600 text-white py-4 rounded-xl font-medium hover:bg-pink-700 transition">
+              Send Message ✈
+            </button>
+          </form>
         </div>
       </div>
     </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="bg-white py-12 border-t border-slate-100">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-6">
+        
+        {/* Branding */}
+        <div className="text-center md:text-left">
+          <p className="text-lg font-semibold tracking-tight text-slate-900" style={{ fontFamily: "'Playfair Display', serif" }}>
+            Angelica Aljas
+          </p>
+          <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground mt-1">
+            Medical Virtual Assistant
+          </p>
+        </div>
+
+        {/* Copyright */}
+        <div className="text-[11px] text-slate-400 font-medium">
+          © {new Date().getFullYear()} Angelica Aljas. All rights reserved.
+        </div>
+
+        {/* Social Links */}
+        <div className="flex items-center gap-3">
+          {[
+            { icon: Instagram, href: "#" },
+            { icon: Linkedin, href: "#" },
+            { icon: Twitter, href: "#" }
+          ].map((social, i) => (
+            <a
+              key={i}
+              href={social.href}
+              className="w-9 h-9 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-pink-50 hover:text-pink-600 transition-all duration-300"
+            >
+              <social.icon size={16} />
+            </a>
+          ))}
+        </div>
+        
+      </div>
+    </footer>
   );
 }
 
@@ -889,13 +916,16 @@ function Contact() {
 // EXPORT SYSTEM MAIN ENTRY
 // ─────────────────────────────────────────────
 export default function App() {
-  // Dynamically injecting Bootstrap Icons CDN into head
   useEffect(() => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css";
+    link.href =
+      "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css";
     document.head.appendChild(link);
-    return () => { document.head.removeChild(link); };
+
+    return () => {
+      document.head.removeChild(link);
+    };
   }, []);
 
   return (
@@ -910,6 +940,7 @@ export default function App() {
         <Testimonials />
         <Contact />
       </main>
+      <Footer />
     </div>
   );
 }
