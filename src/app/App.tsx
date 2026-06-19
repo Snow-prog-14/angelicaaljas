@@ -32,9 +32,9 @@ const GLOBAL_CSS = `
   }
   .sparkle { animation: sparkle-float var(--dur,6s) ease-in-out infinite; animation-delay: var(--del,0s); }
   ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #fef7f9; }
-  ::-webkit-scrollbar-thumb { background: #e0a0b4; border-radius: 9px; }
-  ::-webkit-scrollbar-thumb:hover { background: #c05c72; }
+  ::-webkit-scrollbar-track { background: #fff5f6; }
+  ::-webkit-scrollbar-thumb { background: #ffb3c1; border-radius: 9px; }
+  ::-webkit-scrollbar-thumb:hover { background: #ff8fa3; }
   html { scroll-behavior: smooth; }
 `;
 
@@ -189,8 +189,8 @@ const scrollTo = (href: string) => {
   document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
 };
 
-const ROSE_GRAD = "linear-gradient(135deg, #0d9488 0%, #0284c7 100%)";
-const ROSE_GRAD_SOFT = "linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%)";
+const ROSE_GRAD = "linear-gradient(135deg, #ff8fa3 0%, #ff758f 100%)";
+const ROSE_GRAD_SOFT = "linear-gradient(135deg, #fff5f6 0%, #ffe3e6 100%)";
 
 // ─────────────────────────────────────────────
 // SMALL REUSABLE COMPONENTS
@@ -351,28 +351,28 @@ function Nav() {
           background: "rgba(255,255,255,0.92)",
           backdropFilter: "blur(18px)",
           WebkitBackdropFilter: "blur(18px)",
-          borderBottom: "1px solid rgba(13,148,136,0.2)",
-          boxShadow: "0 2px 24px rgba(13,148,136,0.06)",
+          borderBottom: "1px solid rgba(255,143,163,0.25)",
+          boxShadow: "0 2px 24px rgba(255,143,163,0.06)",
         } : {}}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-[72px]">
           <button onClick={() => goto("#hero")} className="text-left group">
             <p className="text-xl font-semibold tracking-tight text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>Angelica Aljas</p>
-            <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground group-hover:text-teal-600 transition-colors">Medical Virtual Assistant</p>
+            <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground group-hover:text-primary transition-colors">Medical Virtual Assistant</p>
           </button>
 
           <div className="hidden md:flex items-center gap-7">
             {NAV_LINKS.map((l) => (
               <button key={l.href} onClick={() => goto(l.href)} className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium relative group">
                 {l.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-teal-400 group-hover:w-full transition-all duration-300" />
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
               </button>
             ))}
           </div>
 
           <button
             onClick={() => goto("#contact")}
-            className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-teal-200/40"
+            className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/40"
             style={{ background: ROSE_GRAD }}
           >
             Schedule Consultation <ArrowRight size={14} />
@@ -392,13 +392,13 @@ function Nav() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.22 }}
             className="fixed top-[72px] left-0 right-0 z-40 p-6 flex flex-col gap-4 md:hidden"
-            style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(13,148,136,0.2)" }}
+            style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,143,163,0.25)" }}
           >
             {NAV_LINKS.map((l, i) => (
               <motion.button
                 key={l.href}
                 onClick={() => goto(l.href)}
-                className="text-left text-lg font-medium text-foreground hover:text-primary transition-colors py-1 border-b border-teal-50"
+                className="text-left text-lg font-medium text-foreground hover:text-primary transition-colors py-1 border-b border-pink-100"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
@@ -487,11 +487,11 @@ function Hero() {
 
   return (
     <section id="hero" ref={ref} className="relative min-h-screen flex items-center overflow-hidden pt-[72px]"
-      style={{ background: "linear-gradient(140deg, #f0fdfa 0%, #f8fafc 45%, #f0f9ff 100%)" }}
+      style={{ background: "linear-gradient(140deg, #fff5f6 0%, #ffffff 45%, #ffe3e6 100%)" }}
     >
       {/* Parallax blobs */}
-      <motion.div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full pointer-events-none" style={{ y: blob1Y, background: "radial-gradient(circle, rgba(13,148,136,0.15), transparent 70%)" }} />
-      <motion.div className="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full pointer-events-none" style={{ y: blob2Y, background: "radial-gradient(circle, rgba(14,165,233,0.12), transparent 70%)" }} />
+      <motion.div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full pointer-events-none" style={{ y: blob1Y, background: "radial-gradient(circle, rgba(255,143,163,0.15), transparent 70%)" }} />
+      <motion.div className="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full pointer-events-none" style={{ y: blob2Y, background: "radial-gradient(circle, rgba(255,179,193,0.12), transparent 70%)" }} />
 
       <SparkleField count={8} />
 
@@ -508,19 +508,19 @@ function Hero() {
           <motion.div className="max-w-2xl" variants={copyContainerVariants}>
             <motion.div
               className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-8 border"
-              style={{ background: "rgba(255,255,255,0.8)", borderColor: "rgba(13,148,136,0.3)", boxShadow: "0 2px 12px rgba(13,148,136,0.05)" }}
+              style={{ background: "rgba(255,255,255,0.8)", borderColor: "rgba(255,143,163,0.3)", boxShadow: "0 2px 12px rgba(255,143,163,0.05)" }}
               variants={badgeVariants}
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
               </span>
-              <span className="text-xs font-semibold text-teal-600 tracking-wide">Available for Practice Support</span>
+              <span className="text-xs font-semibold text-primary tracking-wide">Available for Practice Support</span>
             </motion.div>
 
             <div className="overflow-hidden mb-2">
               <motion.p
-                className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-600 mb-5"
+                className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-5"
                 variants={subtitleVariants}
               >
                 Medical Virtual Assistant &amp; Clinical Support
@@ -534,7 +534,7 @@ function Hero() {
             >
               Streamlining Medical Operations,{" "}
               <span
-                style={{ background: "linear-gradient(135deg, #0f766e, #0d9488, #0284c7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+                style={{ background: "linear-gradient(135deg, #a34858, #ff8fa3, #ff758f)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
               >
                 Patient Care,
               </span>
@@ -556,7 +556,7 @@ function Hero() {
             >
               <button
                 onClick={() => scrollTo("#contact")}
-                className="group flex items-center gap-2.5 px-8 py-4 rounded-full text-white font-medium text-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-300/30"
+                className="group flex items-center gap-2.5 px-8 py-4 rounded-full text-white font-medium text-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30"
                 style={{ background: ROSE_GRAD }}
               >
                 Schedule a Consultation
@@ -564,8 +564,8 @@ function Hero() {
               </button>
               <button
                 onClick={() => scrollTo("#services")}
-                className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium border-2 transition-all duration-300 hover:bg-teal-50"
-                style={{ borderColor: "#0d9488", color: "#0f766e" }}
+                className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium border-2 transition-all duration-300 hover:bg-rose-50"
+                style={{ borderColor: "#ff8fa3", color: "#a34858" }}
               >
                 View Medical Services
               </button>
@@ -580,7 +580,7 @@ function Hero() {
                 <span className="text-muted-foreground font-medium">5.0 Rated</span>
               </div>
               <span className="h-4 w-px bg-border" />
-              <span className="text-muted-foreground flex items-center gap-1.5"><Shield size={14} className="text-teal-600" /> HIPAA Compliant Protocols</span>
+              <span className="text-muted-foreground flex items-center gap-1.5"><Shield size={14} className="text-primary" /> HIPAA Compliant Protocols</span>
               <span className="h-4 w-px bg-border" />
               <span className="text-muted-foreground"><strong className="text-foreground">15k+</strong> support hours</span>
             </motion.div>
@@ -592,12 +592,12 @@ function Hero() {
             variants={portraitVariants}
           >
             {/* Orbit rings */}
-            <div className="absolute w-[420px] h-[420px] rounded-full border border-dashed" style={{ borderColor: "rgba(13,148,136,0.2)", animation: "orbit-spin 35s linear infinite" }} />
-            <div className="absolute w-[350px] h-[350px] rounded-full border" style={{ borderColor: "rgba(14,165,233,0.15)", animation: "orbit-counter 25s linear infinite" }} />
+            <div className="absolute w-[420px] h-[420px] rounded-full border border-dashed" style={{ borderColor: "rgba(255,143,163,0.25)", animation: "orbit-spin 35s linear infinite" }} />
+            <div className="absolute w-[350px] h-[350px] rounded-full border" style={{ borderColor: "rgba(255,179,193,0.2)", animation: "orbit-counter 25s linear infinite" }} />
 
             {/* Gradient border portrait */}
-            <div className="relative z-10" style={{ padding: "3px", borderRadius: "28px", background: "linear-gradient(135deg, #0f766e, #0d9488, #0284c7)" }}>
-              <div className="w-[280px] h-[360px] rounded-[26px] overflow-hidden" style={{ background: "#f0fdfa" }}>
+            <div className="relative z-10" style={{ padding: "3px", borderRadius: "28px", background: "linear-gradient(135deg, #a34858, #ff8fa3, #ffb3c1)" }}>
+              <div className="w-[280px] h-[360px] rounded-[26px] overflow-hidden" style={{ background: "#fff5f6" }}>
                 <img
                   src={image_ikang}
                   alt="Angelica Aljas — Medical Virtual Assistant"
@@ -609,7 +609,7 @@ function Hero() {
             {/* Floating chips */}
             <motion.div
               className="absolute z-20 -left-16 top-16 rounded-2xl border px-[16px] py-[12px]"
-              style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(13,148,136,0.3)", boxShadow: "0 4px 20px rgba(13,148,136,0.1)" }}
+              style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(255,143,163,0.3)", boxShadow: "0 4px 20px rgba(255,143,163,0.1)" }}
               animate={{ y: [-8, 8, -8] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
             >
@@ -619,11 +619,11 @@ function Hero() {
 
             <motion.div
               className="absolute z-20 -right-12 bottom-20 rounded-2xl px-4 py-3 border flex items-center gap-2"
-              style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(13,148,136,0.3)", boxShadow: "0 4px 20px rgba(13,148,136,0.1)" }}
+              style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(255,143,163,0.3)", boxShadow: "0 4px 20px rgba(255,143,163,0.1)" }}
               animate={{ y: [8, -8, 8] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             >
-              <Shield size={18} className="text-teal-600" />
+              <Shield size={18} className="text-primary" />
               <div>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Compliance</p>
                 <p className="text-xs font-semibold text-foreground">HIPAA Compliant</p>
@@ -638,7 +638,7 @@ function Hero() {
               { t: "10%", l: "10%", s: 8,  d: 0.7 },
             ].map(({ t, l, s, d }, i) => (
               <div key={i} className="sparkle absolute pointer-events-none" style={{ top: t, left: l, "--dur": "5s", "--del": `${d}s`, opacity: 0.4 } as React.CSSProperties}>
-                <svg width={s} height={s} viewBox="0 0 24 24" fill="currentColor" className="text-teal-300">
+                <svg width={s} height={s} viewBox="0 0 24 24" fill="currentColor" className="text-rose-300">
                   <path d="M12 2 L13.5 9 L20 12 L13.5 15 L12 22 L10.5 15 L4 12 L10.5 9 Z" />
                 </svg>
               </div>
@@ -656,19 +656,18 @@ function Hero() {
         <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Scroll to explore</p>
         <motion.div
           className="w-5 h-8 rounded-full border-2 flex items-start justify-center p-1"
-          style={{ borderColor: "rgba(13,148,136,0.3)" }}
+          style={{ borderColor: "rgba(255,143,163,0.3)" }}
         >
-          <motion.div className="w-1 h-2 rounded-full" style={{ background: "#0d9488" }} animate={{ y: [0, 12, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.div className="w-1 h-2 rounded-full" style={{ background: "#ff8fa3" }} animate={{ y: [0, 12, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }} />
         </motion.div>
       </motion.div>
     </section>
   );
 }
 
+// ─────────────────────────────────────────────
 // ABOUT
 // ─────────────────────────────────────────────
-
-
 
 function About() {
   return (
@@ -685,25 +684,14 @@ function About() {
             transition={{ duration: 0.72 }}
           >
             {/* Offset frame accent */}
-            <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl border-2 border-dashed pointer-events-none" style={{ borderColor: "rgba(13,148,136,0.2)" }} />
+            <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl border-2 border-dashed pointer-events-none" style={{ borderColor: "rgba(255,143,163,0.25)" }} />
 
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/5]" style={{ background: "#f0fdfa", boxShadow: "0 24px 60px rgba(13,148,136,0.14)" }}>
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5]" style={{ background: "#fff5f6", boxShadow: "0 24px 60px rgba(255,143,163,0.14)" }}>
               <img
-                src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=640&h=800&fit=crop&auto=format"
-                alt="Angelica Aljas — Medical Virtual Assistant"
+                src={image_ikang}
+                alt="About Angelica Aljas"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(13,148,136,0.12) 0%, transparent 55%)" }} />
-            </div>
-
-            {/* Floating badge */}
-            <div
-              className="absolute -bottom-6 right-4 px-6 py-4 rounded-2xl"
-              style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(16px)", border: "1px solid rgba(13,148,136,0.5)", boxShadow: "0 8px 32px rgba(13,148,136,0.12)" }}
-            >
-              <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Experience</p>
-              <p className="text-3xl font-semibold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>5+ Years</p>
-              <p className="text-xs text-muted-foreground mt-0.5">of dedicated clinical support</p>
             </div>
           </motion.div>
 
@@ -715,29 +703,20 @@ function About() {
             transition={{ duration: 0.72 }}
           >
             <EyebrowLabel text="About Me" />
-            <h2 className="text-4xl md:text-5xl font-semibold text-foreground mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Your Behind-the-Scenes <em style={{ color: "#0f766e" }}>Practice Partner</em>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Your Trusted Partner in Clinical Workflow Optimization
             </h2>
-            <p className="text-muted-foreground leading-relaxed text-lg mb-4">
-              Hi there! I am Angelica — a dedicated Medical Virtual Assistant specializing in remote administrative and clinical support for private practices, clinics, and healthcare practitioners.
+            <p className="text-muted-foreground mb-6 leading-relaxed">
+              With over half a decade working closely beside providers across various fields—from general medicine to specialized clinical networks—I understand the modern burden of administrative overhead. 
             </p>
-            <p className="text-muted-foreground leading-relaxed mb-8">
-              Over the past 5 years, I have supported 50+ providers in managing patient communication, prior authorizations, calendar triaging, and EHR chart preparation. I maintain a strict commitment to HIPAA compliance and patient data privacy.
+            <p className="text-muted-foreground mb-8 leading-relaxed">
+              My mission is straightforward: eliminating documentation obstacles and coordinating dynamic patient lines so you can show up fully to your true calling—clinical care.
             </p>
 
-            <div className="mb-8">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground mb-5">Core Expertise</p>
-              {SKILLS.map((s) => <SkillBar key={s.name} name={s.name} pct={s.pct} />)}
-            </div>
-
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground mb-3">Tools I Work With</p>
-            <div className="flex flex-wrap gap-2">
-              {TOOLS.map((t) => (
-                <span key={t} className="px-3 py-1.5 rounded-full text-xs font-medium border" style={{ background: ROSE_GRAD_SOFT, borderColor: "rgba(13,148,136,0.15)", color: "#0f766e" }}>
-                  {t}
-                </span>
-              ))}
-            </div>
+            {/* Profile Skill bars */}
+            {SKILLS.map((s, idx) => (
+              <SkillBar key={idx} name={s.name} pct={s.pct} />
+            ))}
           </motion.div>
         </div>
       </div>
@@ -746,128 +725,28 @@ function About() {
 }
 
 // ─────────────────────────────────────────────
-// SERVICES
+// SERVICES SECTION
 // ─────────────────────────────────────────────
-
-
 
 function Services() {
   return (
-    <section id="services" className="py-28 relative overflow-hidden" style={{ background: "linear-gradient(180deg, #f0fdfa 0%, #f8fafc 100%)" }}>
-      <SparkleField count={5} />
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative">
-        <SectionTitle
-          eyebrow="What I Offer"
-          title="Clinical & Administrative Support Services"
-          sub="From HIPAA-compliant prior authorizations to schedule optimization — specialized remote support that integrates directly into your practice workflows."
-        />
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {SERVICES.map((svc, i) => {
-            const Icon = svc.icon;
-            return (
-              <GlassCard key={svc.title} className="p-7 group cursor-default" delay={i * 0.07}>
-                {/* Gradient top border */}
-                <div className="absolute top-0 left-6 right-6 h-0.5 rounded-b-full opacity-0 group-hover:opacity-100 transition-opacity duration-400" style={{ background: ROSE_GRAD }} />
-
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" style={{ background: ROSE_GRAD_SOFT }}>
-                  <Icon size={20} className="text-teal-600" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2.5 text-[15px] leading-snug" style={{ fontFamily: "'Playfair Display', serif" }}>{svc.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{svc.desc}</p>
-              </GlassCard>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────
-// PROJECTS
-// ─────────────────────────────────────────────
-
-function Projects() {
-  return (
-    <section id="projects" className="py-28 bg-white overflow-hidden">
+    <section id="services" className="py-28 bg-[#fff5f6]">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <SectionTitle
-          eyebrow="Case Studies"
-          title="Proven Clinical Impact"
-          sub="Every case study demonstrates optimized clinic operations and tangible improvements for practitioners."
+        <SectionTitle 
+          eyebrow="Expertise" 
+          title="Comprehensive Medical VA Services" 
+          sub="Precision support custom-tailored to minimize friction, lower wait lists, and enhance administrative clarity."
         />
 
-        <div className="flex flex-col gap-24">
-          {PROJECTS.map((p, i) => (
-            <motion.article
-              key={p.client}
-              className="grid lg:grid-cols-2 gap-12 items-center"
-              initial={{ opacity: 0, x: i % 2 === 0 ? -56 : 56 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.72 }}
-            >
-              {/* Image */}
-              <div className={i % 2 === 1 ? "lg:order-2" : ""}>
-                <div className="relative rounded-3xl overflow-hidden aspect-video" style={{ background: "#f0fdfa", boxShadow: "0 20px 56px rgba(13,148,136,0.12)" }}>
-                  <img src={p.image} alt={p.client} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(13,148,136,0.35) 0%, transparent 55%)" }} />
-
-                  {/* Tag chips */}
-                  <div className="absolute bottom-4 left-4 flex flex-wrap gap-2">
-                    {p.services.map((s) => (
-                      <span key={s} className="px-3 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(255,255,255,0.88)", color: "#0f766e", backdropFilter: "blur(8px)" }}>
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Index badge */}
-                  <div className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ background: ROSE_GRAD }}>
-                    0{i + 1}
-                  </div>
-                </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {SERVICES.map((s, i) => (
+            <GlassCard key={i} className="p-8 flex flex-col items-start text-left" delay={i * 0.08}>
+              <div className="p-4 rounded-2xl mb-6 text-primary bg-pink-50 border border-rose-100">
+                <s.icon size={24} />
               </div>
-
-              {/* Content */}
-              <div className={i % 2 === 1 ? "lg:order-1" : ""}>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-teal-600 mb-2">{p.type}</p>
-                <h3 className="text-3xl md:text-4xl font-semibold text-foreground mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>{p.client}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-8">{p.outcome}</p>
-
-                {/* Before / After */}
-                <div className="rounded-2xl overflow-hidden border mb-8" style={{ borderColor: "rgba(13,148,136,0.35)" }}>
-                  <div className="grid grid-cols-2">
-                    <div className="p-5 border-r" style={{ background: "#fafafa", borderColor: "rgba(13,148,136,0.25)" }}>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-3">Before</p>
-                      {p.before.map((b) => (
-                        <div key={b.label} className="mb-2.5 last:mb-0">
-                          <p className="text-base font-semibold text-muted-foreground">{b.value}</p>
-                          <p className="text-[11px] text-muted-foreground/70">{b.label}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-5" style={{ background: ROSE_GRAD_SOFT }}>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-teal-600 mb-3">After</p>
-                      {p.after.map((a) => (
-                        <div key={a.label} className="mb-2.5 last:mb-0">
-                          <p className="text-base font-bold text-foreground">{a.value}</p>
-                          <p className="text-[11px] text-muted-foreground">{a.label}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="px-5 py-3.5 border-t" style={{ background: ROSE_GRAD, borderColor: "transparent" }}>
-                    <p className="text-xs font-semibold text-white">{p.headline}</p>
-                  </div>
-                </div>
-
-                <button className="group flex items-center gap-2 text-sm font-semibold transition-all duration-200 hover:gap-3" style={{ color: "#0f766e" }}>
-                  Read Full Case Study <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                </button>
-              </div>
-            </motion.article>
+              <h3 className="text-xl font-medium mb-3 text-foreground">{s.title}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">{s.desc}</p>
+            </GlassCard>
           ))}
         </div>
       </div>
@@ -876,263 +755,198 @@ function Projects() {
 }
 
 // ─────────────────────────────────────────────
-// PRICING
+// PROJECTS & CASE STUDIES SECTION
 // ─────────────────────────────────────────────
 
-
-function Pricing() {
-  const [billing, setBilling] = useState<"monthly" | "hourly">("monthly");
-
+function Projects() {
   return (
-    <section id="pricing" className="py-28 relative overflow-hidden" style={{ background: "linear-gradient(180deg, #f0fdfa 0%, #f8fafc 100%)" }}>
-      <SparkleField count={5} />
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative">
-        <SectionTitle
-          eyebrow="Investment"
-          title="Transparent Pricing, Zero Surprises"
-          sub="Select a HIPAA-compliant support plan that aligns with your practice volume. Scalable options designed for single providers and group clinics."
+    <section id="projects" className="py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <SectionTitle 
+          eyebrow="Outcomes" 
+          title="Proven Clinic Case Transformations" 
+          sub="Real metrics reflecting reduced backlog timelines, accelerated authorization speed, and optimization shifts."
         />
 
-        {/* Toggle */}
-        <div className="flex items-center justify-center gap-4 mb-14">
-          <span className={`text-sm font-medium transition-colors ${billing === "monthly" ? "text-foreground" : "text-muted-foreground"}`}>Monthly</span>
-          <button
-            onClick={() => setBilling(b => b === "monthly" ? "hourly" : "monthly")}
-            aria-label="Toggle billing period"
-            className="relative w-12 h-6 rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300"
-            style={{ background: billing === "monthly" ? "#0f766e" : "#93c5fd" }}
-          >
-            <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all duration-300 ${billing === "monthly" ? "left-0.5" : "left-6"}`} />
-          </button>
-          <span className={`text-sm font-medium transition-colors ${billing === "hourly" ? "text-foreground" : "text-muted-foreground"}`}>Hourly</span>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-7 items-stretch">
-          {PRICING.map((plan, i) => (
-            <motion.div
-              key={plan.name}
-              className="relative flex flex-col rounded-3xl"
-              style={plan.popular ? {
-                background: "linear-gradient(160deg, #f0fdfa 0%, #e0f2fe 100%)",
-                border: "2px solid rgba(13,148,136,0.3)",
-                boxShadow: "0 24px 64px rgba(13,148,136,0.18)",
-              } : {
-                background: "rgba(255,255,255,0.76)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.85)",
-                boxShadow: "0 6px 32px rgba(13,148,136,0.07)",
-              }}
-              initial={{ opacity: 0, y: 36 }}
+        <div className="space-y-20">
+          {PROJECTS.map((p, i) => (
+            <motion.div 
+              key={i}
+              className={`grid lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? 'lg:direction-rtl' : ''}`}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.58, delay: i * 0.13 }}
-              whileHover={{ scale: 1.025, transition: { duration: 0.22 } }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.65 }}
             >
-              {plan.popular && (
-                <div className="absolute -top-4 inset-x-0 flex justify-center">
-                  <div className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-white text-xs font-bold" style={{ background: ROSE_GRAD, boxShadow: "0 4px 16px rgba(13,148,136,0.35)" }}>
-                    <Sparkles size={11} /> Most Popular
-                  </div>
+              {/* Image box */}
+              <div className={`relative overflow-hidden rounded-3xl border border-rose-100 shadow-xl shadow-rose-100/30 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <img src={p.image} alt={p.client} className="w-full h-auto aspect-[4/3] object-cover" />
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-semibold text-primary border border-rose-100">
+                  {p.type}
                 </div>
-              )}
-
-              <div className="p-8 pb-6">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-teal-600 mb-2">{plan.name}</p>
-                <div className="flex items-baseline gap-1.5 mb-1">
-                  <span className="text-5xl font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
-                    {billing === "monthly" ? plan.monthly : plan.hourly}
-                  </span>
-                  <span className="text-sm text-muted-foreground">{billing === "monthly" ? "/ month" : "/ hour"}</span>
-                </div>
-                <p className="text-xs font-medium text-teal-600 mb-3">{plan.hrs}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{plan.desc}</p>
               </div>
 
-              <div className="mx-8 border-t" style={{ borderColor: "rgba(13,148,136,0.25)" }} />
+              {/* Data and metrics box */}
+              <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
+                <h3 className="text-2xl font-semibold text-foreground mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>{p.client}</h3>
+                <p className="text-primary font-medium text-sm mb-6 flex flex-wrap gap-2">
+                  {p.services.map((s, idx) => <span key={idx} className="bg-pink-50 border border-rose-100/60 px-3 py-1 rounded-full text-xs">{s}</span>)}
+                </p>
+                <h4 className="text-xl font-semibold text-foreground mb-4 leading-snug">{p.headline}</h4>
+                <p className="text-muted-foreground mb-8 text-sm leading-relaxed">{p.outcome}</p>
 
-              <div className="flex-1 p-8 py-6">
-                <ul className="space-y-3">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-sm text-foreground/80">
-                      <div className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: ROSE_GRAD_SOFT }}>
-                        <Check size={10} className="text-teal-600" />
+                {/* Metrics Table Comparison */}
+                <div className="grid grid-cols-2 gap-4 border-t border-pink-100 pt-6">
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Before Support</p>
+                    {p.before.map((b, idx) => (
+                      <div key={idx} className="mb-2">
+                        <p className="text-xs text-muted-foreground">{b.label}</p>
+                        <p className="text-sm font-semibold text-rose-700">{b.value}</p>
                       </div>
-                      {f}
+                    ))}
+                  </div>
+                  <div className="border-l border-pink-50 pl-6">
+                    <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">Optimized Result</p>
+                    {p.after.map((a, idx) => (
+                      <div key={idx} className="mb-2">
+                        <p className="text-xs text-muted-foreground">{a.label}</p>
+                        <p className="text-sm font-semibold text-emerald-600">{a.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// PRICING SECTION
+// ─────────────────────────────────────────────
+
+function Pricing() {
+  return (
+    <section id="pricing" className="py-28 bg-[#fff5f6]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <SectionTitle 
+          eyebrow="Investment" 
+          title="Flexible Practice Retainers" 
+          sub="Scalable monthly solutions configured strictly to adapt to individual operational workflows and volume constraints."
+        />
+
+        <div className="grid lg:grid-cols-3 gap-8 items-stretch">
+          {PRICING.map((p, i) => (
+            <motion.div
+              key={i}
+              className={`rounded-3xl p-8 relative flex flex-col justify-between bg-white border ${p.popular ? 'border-primary shadow-xl shadow-rose-200/40' : 'border-rose-100'}`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, delay: i * 0.1 }}
+            >
+              {p.popular && (
+                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-white text-[11px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-md">
+                  Most Popular Partner
+                </span>
+              )}
+
+              <div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">{p.name}</h3>
+                <p className="text-muted-foreground text-xs mb-6 min-h-[32px]">{p.desc}</p>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-4xl font-bold text-foreground">{p.monthly}</span>
+                  <span className="text-muted-foreground text-xs">/ month</span>
+                </div>
+                <p className="text-xs text-primary font-medium mb-6 bg-pink-50 border border-rose-100/50 inline-block px-2.5 py-1 rounded-md">
+                  {p.hrs} ({p.hourly}/hr)
+                </p>
+                <div className="h-px bg-pink-50 w-full mb-6" />
+                
+                <ul className="space-y-3 mb-8">
+                  {p.features.map((f, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-sm text-muted-foreground leading-tight">
+                      <Check size={14} className="text-primary mt-0.5 shrink-0" />
+                      <span>{f}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="p-8 pt-4">
-                <button
-                  className={`w-full py-4 rounded-2xl text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 ${plan.popular ? "text-white hover:shadow-xl hover:shadow-teal-300/40" : "border-2 hover:bg-teal-50"}`}
-                  style={plan.popular ? { background: ROSE_GRAD } : { borderColor: "#0d9488", color: "#0f766e" }}
-                >
-                  {plan.cta}
-                </button>
-              </div>
+              <button
+                onClick={() => scrollTo("#contact")}
+                className={`w-full py-3.5 rounded-full font-medium text-sm transition-all duration-300 ${p.popular ? 'text-white shadow-lg shadow-primary/20' : 'text-primary bg-pink-50 border border-rose-100 hover:bg-pink-100'}`}
+                style={p.popular ? { background: ROSE_GRAD } : {}}
+              >
+                {p.cta}
+              </button>
             </motion.div>
           ))}
         </div>
-
-        <motion.p
-          className="text-center text-sm text-muted-foreground mt-10"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.45 }}
-        >
-          Not sure which fits? {" "}
-          <button className="font-semibold underline underline-offset-2 hover:opacity-80 transition-opacity" style={{ color: "#0f766e" }} onClick={() => scrollTo("#contact")}>
-            Schedule a free 30-min consultation
-          </button>{" "}
-          and we will figure it out together.
-        </motion.p>
       </div>
     </section>
   );
 }
 
 // ─────────────────────────────────────────────
-// TESTIMONIALS
+// TESTIMONIALS SECTION
 // ─────────────────────────────────────────────
 
-
 function Testimonials() {
-  const [idx, setIdx] = useState(0);
-  const n = TESTIMONIALS.length;
-
-  useEffect(() => {
-    const timer = setInterval(() => setIdx(i => (i + 1) % n), 6000);
-    return () => clearInterval(timer);
-  }, [n]);
+  const [active, setActive] = useState(0);
 
   return (
     <section id="testimonials" className="py-28 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <SectionTitle
-          eyebrow="Client Love"
-          title="What Providers Say"
-          sub="Real feedback from providers and practice managers who have experienced the clinical and operational difference."
+      <div className="max-w-5xl mx-auto px-6">
+        <SectionTitle 
+          eyebrow="Reviews" 
+          title="Endorsed by Clinical Professionals" 
         />
 
-        {/* Main card */}
-        <div className="max-w-3xl mx-auto mb-8">
+        <div className="relative min-h-[280px] flex flex-col items-center text-center max-w-3xl mx-auto">
+          <Quote size={48} className="text-rose-100 mb-6 absolute -top-8 -left-6 opacity-60 pointer-events-none" />
+          
           <AnimatePresence mode="wait">
             <motion.div
-              key={idx}
-              initial={{ opacity: 0, scale: 0.97, filter: "blur(6px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 0.97, filter: "blur(6px)" }}
-              transition={{ duration: 0.42 }}
-              className="relative rounded-3xl p-10 md:p-14 overflow-hidden"
-              style={{ background: "linear-gradient(145deg, #f0fdfa, #e0f2fe)", border: "1px solid rgba(13,148,136,0.3)", boxShadow: "0 12px 48px rgba(13,148,136,0.1)" }}
+              key={active}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.35 }}
+              className="z-10"
             >
-              {/* Large quote */}
-              <Quote className="absolute top-6 right-8 text-teal-100/50" size={72} fill="currentColor" />
-
-              <div className="flex gap-1 mb-7">
-                {[...Array(TESTIMONIALS[idx].rating)].map((_, i) => (
-                  <Star key={i} size={18} fill="#f59e0b" className="text-amber-400" />
-                ))}
-              </div>
-
-              <p className="text-xl md:text-2xl text-foreground leading-relaxed mb-10 relative" style={{ fontFamily: "'Playfair Display', serif" }}>
-                &ldquo;{TESTIMONIALS[idx].text}&rdquo;
+              <p className="text-lg md:text-xl text-foreground font-medium leading-relaxed mb-8 italic">
+                "{TESTIMONIALS[active].text}"
               </p>
-
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2" style={{ borderColor: "rgba(13,148,136,0.2)", background: "#f0fdfa" }}>
-                  <img src={TESTIMONIALS[idx].img} alt={TESTIMONIALS[idx].name} className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">{TESTIMONIALS[idx].name}</p>
-                  <p className="text-sm text-muted-foreground">{TESTIMONIALS[idx].role}</p>
+              <div className="flex items-center justify-center gap-4">
+                <img src={TESTIMONIALS[active].img} alt={TESTIMONIALS[active].name} className="w-12 h-12 rounded-full border-2 border-primary object-cover" />
+                <div className="text-left">
+                  <h4 className="font-semibold text-foreground text-sm">{TESTIMONIALS[active].name}</h4>
+                  <p className="text-xs text-muted-foreground">{TESTIMONIALS[active].role}</p>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
 
-        {/* Thumbnails row */}
-        <div className="flex items-center justify-center gap-4">
-          <button onClick={() => setIdx((idx - 1 + n) % n)} className="w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all hover:bg-teal-50" style={{ borderColor: "#0d9488", color: "#0f766e" }} aria-label="Previous">
-            <ChevronLeft size={18} />
-          </button>
-
-          {TESTIMONIALS.map((t, i) => (
-            <button
-              key={i}
-              onClick={() => setIdx(i)}
-              className={`transition-all duration-300 rounded-full overflow-hidden border-2 ${i === idx ? "scale-110" : "opacity-50 hover:opacity-75"}`}
-              style={{ borderColor: i === idx ? "#0f766e" : "transparent" }}
-              aria-label={`Go to testimonial by ${t.name}`}
+          {/* Controls */}
+          <div className="flex gap-3 mt-12 z-20">
+            <button 
+              onClick={() => setActive(prev => (prev === 0 ? TESTIMONIALS.length - 1 : prev - 1))}
+              className="p-3 rounded-full border border-rose-100 text-muted-foreground hover:text-primary hover:bg-pink-50 transition-colors"
             >
-              <img src={t.img} alt={t.name} className="w-10 h-10 object-cover" />
+              <ChevronLeft size={16} />
             </button>
-          ))}
-
-          <button onClick={() => setIdx((idx + 1) % n)} className="w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all hover:bg-teal-50" style={{ borderColor: "#0d9488", color: "#0f766e" }} aria-label="Next">
-            <ChevronRight size={18} />
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────
-// WHY WORK WITH ME
-// ─────────────────────────────────────────────
-
-
-
-function WhyMe() {
-  return (
-    <section className="py-28 relative overflow-hidden" style={{ background: "linear-gradient(180deg, #f0fdfa 0%, #f8fafc 100%)" }}>
-      <SparkleField count={4} />
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative">
-        <SectionTitle
-          eyebrow="Why Choose Me"
-          title="Dedicated to Clinical Excellence"
-          sub="Healthcare providers trust me with their daily workflows because I combine clinic operations knowledge with rigorous security standards."
-        />
-
-        {/* Stats row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
-          {STATS.map((s, i) => (
-            <motion.div
-              key={s.label}
-              className="rounded-2xl p-7 text-center"
-              style={{ background: "rgba(255,255,255,0.76)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.85)", boxShadow: "0 4px 28px rgba(13,148,136,0.07)" }}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.52, delay: i * 0.1 }}
+            <button 
+              onClick={() => setActive(prev => (prev === TESTIMONIALS.length - 1 ? 0 : prev + 1))}
+              className="p-3 rounded-full border border-rose-100 text-muted-foreground hover:text-primary hover:bg-pink-50 transition-colors"
             >
-              <p className="text-4xl md:text-5xl font-bold text-foreground mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-                <CountUp target={s.val} suffix={s.suf} />
-              </p>
-              <p className="text-sm text-muted-foreground font-medium">{s.label}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Benefits */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {BENEFITS.map((b, i) => {
-            const Icon = b.icon;
-            return (
-              <GlassCard key={b.title} className="p-7 group cursor-default" delay={i * 0.1}>
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110" style={{ background: ROSE_GRAD_SOFT }}>
-                  <Icon size={22} className="text-teal-600" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-3 text-[15px]" style={{ fontFamily: "'Playfair Display', serif" }}>{b.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
-              </GlassCard>
-            );
-          })}
+              <ChevronRight size={16} />
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -1140,215 +954,110 @@ function WhyMe() {
 }
 
 // ─────────────────────────────────────────────
-// CONTACT
+// CONTACT SECTION
 // ─────────────────────────────────────────────
 
 function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
+  const [formState, setFormState] = useState({ name: "", email: "", clinic: "", note: "" });
   const [sent, setSent] = useState(false);
 
-  const onSubmit = (e: FormEvent) => { e.preventDefault(); setSent(true); };
-
-  const inputCls = "w-full px-4 py-3.5 rounded-xl bg-white/80 border text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 transition-all duration-200";
-  const inputStyle = { borderColor: "rgba(224,168,186,0.6)", "--tw-ring-color": "rgba(184,92,110,0.2)" } as React.CSSProperties;
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setSent(true);
+    setTimeout(() => setSent(false), 4000);
+    setFormState({ name: "", email: "", clinic: "", note: "" });
+  };
 
   return (
-    <section id="contact" className="py-28 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section id="contact" className="py-28 bg-[#fff5f6] relative">
+      <div className="max-w-4xl mx-auto px-6">
+        <SectionTitle 
+          eyebrow="Connect" 
+          title="Initiate a Workflow Triage Session" 
+          sub="Let's align your operational constraints with strict HIPAA guidelines to optimize administrative tasks."
+        />
 
-        {/* Banner CTA */}
-        <motion.div
-          className="relative rounded-3xl p-12 md:p-16 mb-20 text-center overflow-hidden"
-          style={{ background: ROSE_GRAD, boxShadow: "0 20px 56px rgba(184,92,110,0.22)" }}
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.65 }}
-        >
-          <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-white/10 pointer-events-none" />
-          <div className="absolute -bottom-16 -left-8 w-56 h-56 rounded-full bg-white/08 pointer-events-none" />
-          <SparkleField count={5} />
-          <p className="text-white/75 text-sm font-semibold uppercase tracking-[0.2em] mb-3">Ready to delegate?</p>
-          <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Book Your Free Discovery Call
-          </h2>
-          <p className="text-white/80 max-w-lg mx-auto mb-8 text-lg">
-            30 minutes, zero obligation. Just a genuine conversation about your business and how I can help it grow.
-          </p>
-          <button onClick={() => scrollTo("#contact-form")} className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-sm font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" style={{ color: "#b85c6e" }}>
-            Let&apos;s Connect <ArrowRight size={15} />
-          </button>
-        </motion.div>
-
-        {/* Form + Info */}
-        <div id="contact-form" className="grid lg:grid-cols-2 gap-16 items-start">
-
-          {/* Left */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65 }}
-          >
-            <EyebrowLabel text="Get in Touch" />
-            <h2 className="text-4xl md:text-5xl font-semibold text-foreground mb-5 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Let&apos;s Build Something <em style={{ color: "#b85c6e" }}>Amazing Together</em>
-            </h2>
-            <p className="text-muted-foreground leading-relaxed text-lg mb-10">
-              Ready to reclaim your time and scale your business? I would love to learn about your goals and show you exactly how I can help.
-            </p>
-
-            {[
-              { icon: Mail,    label: "Email",         val: "hello@angelicaaljas.com" },
-              { icon: Clock,   label: "Response Time", val: "Within 24 hrs, Mon – Fri" },
-              { icon: MapPin,  label: "Location",      val: "Philippines — Available Worldwide" },
-            ].map(({ icon: Icon, label, val }) => (
-              <div key={label} className="flex items-center gap-4 mb-5">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: ROSE_GRAD_SOFT }}>
-                  <Icon size={18} className="text-rose-400" />
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-0.5">{label}</p>
-                  <p className="text-sm font-medium text-foreground">{val}</p>
-                </div>
+        <GlassCard className="p-8 md:p-12 border border-rose-100/60 shadow-2xl shadow-rose-100/40">
+          <form onSubmit={handleSubmit} className="space-y-6 text-left">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Provider/Contact Name</label>
+                <input 
+                  type="text" required 
+                  value={formState.name} onChange={e => setFormState({...formState, name: e.target.value})}
+                  className="w-full px-4 py-3 rounded-xl border border-rose-100 bg-white/70 focus:outline-none focus:border-primary text-sm transition-colors text-foreground" 
+                />
               </div>
-            ))}
-
-            <div className="flex gap-3 mt-8">
-              {[Instagram, Linkedin, Twitter].map((Icon, i) => (
-                <a key={i} href="#" className="w-11 h-11 rounded-full flex items-center justify-center border-2 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" style={{ borderColor: "#e0a8ba", color: "#b85c6e" }}>
-                  <Icon size={17} />
-                </a>
-              ))}
+              <div>
+                <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Secure Practice Email</label>
+                <input 
+                  type="email" required 
+                  value={formState.email} onChange={e => setFormState({...formState, email: e.target.value})}
+                  className="w-full px-4 py-3 rounded-xl border border-rose-100 bg-white/70 focus:outline-none focus:border-primary text-sm transition-colors text-foreground" 
+                />
+              </div>
             </div>
-          </motion.div>
+            <div>
+              <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Practice / Clinic Name</label>
+              <input 
+                type="text" 
+                value={formState.clinic} onChange={e => setFormState({...formState, clinic: e.target.value})}
+                className="w-full px-4 py-3 rounded-xl border border-rose-100 bg-white/70 focus:outline-none focus:border-primary text-sm transition-colors text-foreground" 
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Current System Impediments or EHR Setup</label>
+              <textarea 
+                rows={4} required
+                value={formState.note} onChange={e => setFormState({...formState, note: e.target.value})}
+                className="w-full px-4 py-3 rounded-xl border border-rose-100 bg-white/70 focus:outline-none focus:border-primary text-sm transition-colors text-foreground resize-none" 
+              />
+            </div>
 
-          {/* Right — Form */}
-          <motion.div
-            className="rounded-3xl p-8 md:p-10"
-            style={{ background: "linear-gradient(145deg, #fef7f9, #fce4ee)", border: "1px solid rgba(232,180,192,0.4)", boxShadow: "0 12px 48px rgba(184,92,110,0.1)" }}
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65 }}
-          >
-            {sent ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center text-center py-10"
-              >
-                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-5" style={{ background: ROSE_GRAD }}>
-                  <Heart size={26} fill="white" className="text-white" />
-                </div>
-                <h3 className="text-2xl font-semibold text-foreground mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>Message Received!</h3>
-                <p className="text-muted-foreground leading-relaxed">Thank you, {form.name || "friend"}! I will be in touch within 24 hours. I am so excited to learn about your business.</p>
-              </motion.div>
-            ) : (
-              <form onSubmit={onSubmit} className="flex flex-col gap-4">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">Full Name</label>
-                    <input required type="text" placeholder="Jane Smith" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className={inputCls} style={inputStyle} />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">Email Address</label>
-                    <input required type="email" placeholder="jane@company.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} className={inputCls} style={inputStyle} />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">Service Needed</label>
-                  <select value={form.service} onChange={e => setForm({ ...form, service: e.target.value })} className={`${inputCls} cursor-pointer appearance-none`} style={inputStyle}>
-                    <option value="">Select a service...</option>
-                    {SERVICES.map(s => <option key={s.title} value={s.title}>{s.title}</option>)}
-                    <option value="multiple">Multiple Services</option>
-                    <option value="unsure">Not Sure Yet</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">Tell Me About Your Business</label>
-                  <textarea required rows={5} placeholder="Share a bit about your business, the challenges you are facing, and what you need help with..." value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} className={`${inputCls} resize-none`} style={inputStyle} />
-                </div>
-                <button type="submit" className="group flex items-center justify-center gap-2.5 w-full py-4 rounded-2xl text-white text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-rose-300/40" style={{ background: ROSE_GRAD }}>
-                  Send Message <Send size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </button>
-              </form>
-            )}
-          </motion.div>
-        </div>
+            <button
+              type="submit"
+              className="w-full py-4 rounded-full text-white font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:-translate-y-0.5"
+              style={{ background: ROSE_GRAD }}
+            >
+              {sent ? (
+                <>Meeting Request Processed <Check size={16} /></>
+              ) : (
+                <>Request Practice Triage Consultation <Send size={14} /></>
+              )}
+            </button>
+          </form>
+        </GlassCard>
       </div>
     </section>
   );
 }
 
 // ─────────────────────────────────────────────
-// FOOTER
-// ─────────────────────────────────────────────
-
-function Footer() {
-  return (
-    <footer className="border-t py-12" style={{ background: "linear-gradient(180deg, #fef8fa, #fdf4f8)", borderColor: "rgba(232,180,192,0.25)" }}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="grid md:grid-cols-3 gap-10 mb-10">
-          <div>
-            <p className="text-xl font-semibold text-foreground mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>Angelica Aljas</p>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-4">Virtual Assistant</p>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">Helping businesses stay organized, efficient, and stress-free — one task at a time.</p>
-          </div>
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-4">Quick Links</p>
-            <ul className="flex flex-col gap-2.5">
-              {NAV_LINKS.map(l => (
-                <li key={l.href}>
-                  <button onClick={() => scrollTo(l.href)} className="text-sm text-muted-foreground hover:text-primary transition-colors">{l.label}</button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-4">Connect</p>
-            <div className="flex gap-3 mb-4">
-              {[Instagram, Linkedin, Twitter].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-200 hover:-translate-y-0.5" style={{ borderColor: "#e0a8ba", color: "#b85c6e" }}>
-                  <Icon size={15} />
-                </a>
-              ))}
-            </div>
-            <p className="text-sm text-muted-foreground">hello@angelicaaljas.com</p>
-          </div>
-        </div>
-        <div className="border-t pt-8 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderColor: "rgba(232,180,192,0.2)" }}>
-          <p className="text-xs text-muted-foreground">© 2025 Angelica Aljas. All rights reserved.</p>
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <span>Made with</span>
-            <Heart size={12} fill="#b85c6e" className="text-rose-400" />
-            <span>for business owners everywhere</span>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-// ─────────────────────────────────────────────
-// APP
+// MAIN APP COMPONENT
 // ─────────────────────────────────────────────
 
 export default function App() {
   return (
-    <div className="overflow-x-hidden">
+    <div className="bg-[#fff5f6] text-foreground min-h-screen relative antialiased selection:bg-pink-100 selection:text-rose-800">
       <Nav />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Projects />
-        <Pricing />
-        <Testimonials />
-        <WhyMe />
-        <Contact />
-      </main>
-      <Footer />
+      <Hero />
+      <About />
+      <Services />
+      <Projects />
+      <Pricing />
+      <Testimonials />
+      <Contact />
+
+      {/* FOOTER */}
+      <footer className="py-12 border-t border-pink-100 bg-white text-sm text-muted-foreground">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <p>© {new Date().getFullYear()} Angelica Aljas. Fully Protected HIPAA Compliant Administrative Ecosystem.</p>
+          <div className="flex gap-4">
+            <a href="#" className="hover:text-primary transition-colors"><Linkedin size={16} /></a>
+            <a href="#" className="hover:text-primary transition-colors"><Mail size={16} /></a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
