@@ -1,4 +1,3 @@
-
 import image_ikang from '@/imports/ikang.jpg';
 import { useState, useEffect, useRef, FormEvent } from "react";
 import { motion, useInView, AnimatePresence, useScroll, useTransform } from "motion/react";
@@ -38,13 +37,16 @@ const GLOBAL_CSS = `
 // ANIMATION VARIANTS (Enables Scroll Up & Down)
 // ─────────────────────────────────────────────
 const FADE_UP_VARIANTS = {
-  hidden: { opacity: 0, y: 35 },
-  visible: { 
-    opacity: 1, 
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }
-  }
-};
+    transition: {
+      duration: 0.6,
+      ease: [0.6, 0.05, -0.01, 0.9],
+    },
+  },
+} as const;
 
 const STAGGER_CONTAINER = {
   hidden: { opacity: 0 },
@@ -55,7 +57,7 @@ const STAGGER_CONTAINER = {
 };
 
 // ─────────────────────────────────────────────
-// DATA (Updated per image_39aa03.png)
+// DATA
 // ─────────────────────────────────────────────
 const NAV_LINKS = [
   { href: "#about", label: "About" },
@@ -194,7 +196,6 @@ const SKILLS = [
   { name: "HIPAA Compliance & Secure Data Handling", pct: 100 },
 ];
 
-// Tools array updated to use standard Bootstrap Icon CSS classes
 const TOOLS_AND_SYSTEMS = [
   {
     category: "Communication",
@@ -236,6 +237,12 @@ const scrollTo = (href: string) => {
 };
 
 const PINK_GRAD = "linear-gradient(135deg, #ec4899 0%, #be185d 100%)";
+
+// Safe image parser helper to fix Vite development type assertion issues
+const resolveImageSrc = (imgAsset: any): string => {
+  if (typeof imgAsset === 'string') return imgAsset;
+  return imgAsset?.src || '';
+};
 
 // ─────────────────────────────────────────────
 // SMALL REUSABLE COMPONENTS
@@ -468,7 +475,7 @@ function Hero() {
 
             <div className="relative z-10" style={{ padding: "3px", borderRadius: "28px", background: "linear-gradient(135deg, #be185d, #ec4899, #f43f5e)" }}>
               <div className="w-[280px] h-[360px] rounded-[26px] overflow-hidden" style={{ background: "#fff5f7" }}>
-                <img src={image_ikang} alt="Angelica Aljas" className="w-full h-full object-cover" />
+                <img src={resolveImageSrc(image_ikang)} alt="Angelica Aljas" className="w-full h-full object-cover" />
               </div>
             </div>
           </motion.div>
@@ -495,7 +502,7 @@ function About() {
           >
             <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl border-2 border-dashed pointer-events-none" style={{ borderColor: "rgba(236,72,153,0.2)" }} />
             <div className="relative rounded-3xl overflow-hidden aspect-[4/5]" style={{ background: "#fff5f7", boxShadow: "0 24px 60px rgba(236,72,153,0.14)" }}>
-              <img src={image_ikang} alt="Angelica Aljas Profile" className="w-full h-full object-cover" />
+              <img src={resolveImageSrc(image_ikang)} alt="Angelica Aljas Profile" className="w-full h-full object-cover" />
             </div>
           </motion.div>
 
@@ -544,7 +551,6 @@ function About() {
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-9 h-9 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600">
-                    {/* Bootstrap Icon usage */}
                     <i className={`${cat.bsIconClass} text-lg`}></i>
                   </div>
                   <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">{cat.category}</h4>
@@ -586,7 +592,7 @@ function About() {
 }
 
 // ─────────────────────────────────────────────
-// SERVICES / PROJECTS / PRICING / CONTACT / MAIN
+// SERVICES
 // ─────────────────────────────────────────────
 function Services() {
   return (
@@ -613,11 +619,275 @@ function Services() {
   );
 }
 
-function Projects() { return <section id="projects" className="py-12 bg-white" />; }
-function Pricing() { return <section id="pricing" className="py-12 bg-slate-50" />; }
-function Testimonials() { return <section id="testimonials" className="py-12 bg-white" />; }
-function Contact() { return <section id="contact" className="py-12 bg-slate-50" />; }
+// ─────────────────────────────────────────────
+// PROJECTS
+// ─────────────────────────────────────────────
+function Projects() {
+  return (
+    <section id="projects" className="py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <div className="flex justify-center"><EyebrowLabel text="Case Studies" /></div>
+          <h2 className="text-4xl font-semibold text-slate-900 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Proven Practice Outcomes</h2>
+          <p className="text-sm text-muted-foreground">Real-world workflow transformations achieved across partner clinical ecosystems.</p>
+        </div>
 
+        <div className="grid lg:grid-cols-3 gap-8">
+          {PROJECTS.map((p, idx) => (
+            <div key={idx} className="bg-slate-50/60 border border-slate-100 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between h-full">
+              <div>
+                <div className="h-48 overflow-hidden relative">
+                  <img src={p.image} alt={p.client} className="w-full h-full object-cover" />
+                  <div className="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-semibold bg-white/90 backdrop-blur-sm text-pink-600 shadow-sm border border-pink-100">
+                    {p.type}
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-slate-800 mb-2">{p.client}</h3>
+                  <p className="text-sm font-semibold text-pink-600 mb-4 italic">"{p.headline}"</p>
+                  
+                  <div className="flex flex-wrap gap-1.5 mb-6">
+                    {p.services.map((s, i) => (
+                      <span key={i} className="text-[10px] uppercase font-semibold bg-white border px-2.5 py-1 rounded-md text-slate-500 tracking-wider">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Metrics Container */}
+                  <div className="grid grid-cols-2 gap-4 bg-white p-4 rounded-2xl border border-slate-100 mb-4">
+                    <div>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase mb-2 tracking-wider">Before Setup</p>
+                      {p.before.map((b, i) => (
+                        <div key={i} className="mb-1.5 last:mb-0">
+                          <p className="text-[11px] text-slate-500 truncate">{b.label}</p>
+                          <p className="text-xs font-bold text-rose-500 line-through">{b.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="border-l border-slate-100 pl-4">
+                      <p className="text-[10px] font-bold text-pink-500 uppercase mb-2 tracking-wider">With My Support</p>
+                      {p.after.map((a, i) => (
+                        <div key={i} className="mb-1.5 last:mb-0">
+                          <p className="text-[11px] text-slate-600 truncate">{a.label}</p>
+                          <p className="text-xs font-bold text-emerald-600">{a.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-6 pt-0 border-t border-dashed border-slate-200/60 mt-auto bg-slate-100/30">
+                <p className="text-xs text-muted-foreground leading-relaxed mt-4">{p.outcome}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// PRICING
+// ─────────────────────────────────────────────
+function Pricing() {
+  return (
+    <section id="pricing" className="py-28 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <div className="flex justify-center"><EyebrowLabel text="Flexible Plans" /></div>
+          <h2 className="text-4xl font-semibold text-slate-900 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Predictable Investment</h2>
+          <p className="text-sm text-muted-foreground">Select a scalable tiered engagement standard built around specialized healthcare hours.</p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8 items-start">
+          {PRICING.map((p, idx) => (
+            <div 
+              key={idx} 
+              className={`bg-white rounded-3xl p-8 border relative transition-all duration-300 ${
+                p.popular ? 'border-pink-400 shadow-xl ring-2 ring-pink-400/10 lg:-translate-y-4' : 'border-slate-100 shadow-sm'
+              }`}
+            >
+              {p.popular && (
+                <span className="absolute -top-3.5 right-6 bg-pink-600 text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow-md">
+                  Most Popular Partner
+                </span>
+              )}
+              
+              <h3 className="text-lg font-bold text-slate-800 mb-2">{p.name}</h3>
+              <p className="text-xs text-muted-foreground mb-6 h-8">{p.desc}</p>
+              
+              <div className="mb-6 pb-6 border-b border-slate-100">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-bold tracking-tight text-slate-900">{p.monthly}</span>
+                  <span className="text-sm font-semibold text-muted-foreground">/ month</span>
+                </div>
+                <div className="mt-2 text-xs text-slate-500 font-medium">
+                  Equivalent to <span className="text-pink-600 font-bold">{p.hourly}</span> per hour • <span className="underline">{p.hrs}</span>
+                </div>
+              </div>
+
+              <ul className="space-y-3.5 mb-8">
+                {p.features.map((f, i) => (
+                  <li key={i} className="flex items-start gap-3 text-xs text-slate-600 leading-relaxed">
+                    <Check size={14} className="text-emerald-500 shrink-0 mt-0.5" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <button 
+                onClick={() => scrollTo("#contact")}
+                className={`w-full py-3.5 rounded-xl font-medium text-xs tracking-wide transition-all ${
+                  p.popular 
+                    ? 'text-white shadow-md hover:shadow-lg' 
+                    : 'bg-slate-50 text-slate-700 hover:bg-pink-50 hover:text-pink-600 border border-slate-100'
+                }`}
+                style={p.popular ? { background: PINK_GRAD } : {}}
+              >
+                {p.cta}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// TESTIMONIALS
+// ─────────────────────────────────────────────
+function Testimonials() {
+  return (
+    <section id="testimonials" className="py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <div className="flex justify-center"><EyebrowLabel text="References" /></div>
+          <h2 className="text-4xl font-semibold text-slate-900 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Physician & Admin Feedback</h2>
+          <p className="text-sm text-muted-foreground">Hear what healthcare administrators and lead clinicians say about our integrated coverage.</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {TESTIMONIALS.map((t, idx) => (
+            <div key={idx} className="bg-slate-50/50 rounded-2xl p-8 border border-slate-100 flex flex-col justify-between h-full relative">
+              <Quote className="absolute right-6 top-6 w-10 h-10 text-pink-100/80 pointer-events-none" />
+              <div>
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} size={14} className="fill-pink-500 text-pink-500" />
+                  ))}
+                </div>
+                <p className="text-sm text-slate-600 leading-relaxed italic mb-6 relative z-10">
+                  "{t.text}"
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4 pt-4 border-t border-slate-200/40">
+                <img src={t.img} alt={t.name} className="w-11 h-11 rounded-full object-cover border border-pink-200 shadow-sm" />
+                <div>
+                  <h4 className="text-sm font-bold text-slate-800">{t.name}</h4>
+                  <p className="text-[11px] text-muted-foreground">{t.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// CONTACT
+// ─────────────────────────────────────────────
+function Contact() {
+  const [sent, setSent] = useState(false);
+  
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setSent(true);
+    setTimeout(() => setSent(false), 4000);
+  };
+
+  return (
+    <section id="contact" className="py-28 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid lg:grid-cols-2 gap-16">
+          
+          <div>
+            <EyebrowLabel text="Get In Touch" />
+            <h2 className="text-4xl font-semibold text-slate-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Optimize Your Clinical Workflow Today
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-md">
+              Ready to reduce your administrative charting backlog or coordinate prior authorizations effectively? Send a secure inquiry note, and let's set up a discovery consultation call.
+            </p>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-100 shadow-sm max-w-sm">
+                <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600 shrink-0">
+                  <Mail size={18} />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Email Communication</p>
+                  <p className="text-xs font-semibold text-slate-700">angelicaaljas.mva@gmail.com</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-100 shadow-sm max-w-sm">
+                <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600 shrink-0">
+                  <Shield size={18} />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Compliance Status</p>
+                  <p className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+                    <Check size={12} /> 100% HIPAA Standard Aligned
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Form Side */}
+          <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-md relative">
+            <form onSubmit={handleFormSubmit} className="space-y-5">
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Full Name / Clinic Provider</label>
+                <input type="text" required placeholder="Dr. Alex Mercer" className="w-full text-xs px-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300/50 transition-all text-slate-800" />
+              </div>
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Professional Email Address</label>
+                <input type="email" required placeholder="mercer@familypractice.com" className="w-full text-xs px-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300/50 transition-all text-slate-800" />
+              </div>
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Practice Requirements Description</label>
+                <textarea rows={4} required placeholder="Tell me about your scheduling or prior authorization workflows..." className="w-full text-xs px-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300/50 transition-all text-slate-800 resize-none"></textarea>
+              </div>
+
+              <button 
+                type="submit" 
+                className="w-full py-4 rounded-xl font-medium text-xs tracking-wide text-white transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                style={{ background: PINK_GRAD }}
+              >
+                {sent ? "Message Sent Securely!" : "Submit Inquiry Details"} 
+                <Send size={13} className={sent ? "animate-ping" : ""} />
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// EXPORT SYSTEM MAIN ENTRY
+// ─────────────────────────────────────────────
 export default function App() {
   // Dynamically injecting Bootstrap Icons CDN into head
   useEffect(() => {
