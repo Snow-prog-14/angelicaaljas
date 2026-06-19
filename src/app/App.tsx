@@ -1,6 +1,6 @@
-import image_ikang from '@/imports/ikang.jpg'
+import image_ikang from '@/imports/ikang.jpg';
 import { useState, useEffect, useRef, FormEvent } from "react";
-import { motion, useInView, AnimatePresence, useScroll, useTransform, Variants } from "motion/react";
+import { motion, useInView, AnimatePresence, useScroll, useTransform } from "motion/react";
 import {
   Mail, Instagram, Linkedin, Twitter,
   Star, Check, ArrowRight, Menu, X, ChevronLeft, ChevronRight,
@@ -32,16 +32,15 @@ const GLOBAL_CSS = `
   }
   .sparkle { animation: sparkle-float var(--dur,6s) ease-in-out infinite; animation-delay: var(--del,0s); }
   ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #fff5f6; }
-  ::-webkit-scrollbar-thumb { background: #ffb3c1; border-radius: 9px; }
-  ::-webkit-scrollbar-thumb:hover { background: #ff8fa3; }
+  ::-webkit-scrollbar-track { background: #fff5f7; }
+  ::-webkit-scrollbar-thumb { background: #fbcfe8; border-radius: 9px; }
+  ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
   html { scroll-behavior: smooth; }
 `;
 
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
-
 const NAV_LINKS = [
   { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
@@ -182,20 +181,17 @@ const SKILLS = [
 const TOOLS = ["Epic EHR", "Athenahealth", "eClinicalWorks", "SimplePractice", "RingCentral", "Notion", "Slack", "Faxage", "Elation EHR", "Google Workspace"];
 
 // ─────────────────────────────────────────────
-// HELPERS
+// HELPERS & THEME VARIABLES
 // ─────────────────────────────────────────────
-
 const scrollTo = (href: string) => {
   document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
 };
 
-const ROSE_GRAD = "linear-gradient(135deg, #ff8fa3 0%, #ff758f 100%)";
-const ROSE_GRAD_SOFT = "linear-gradient(135deg, #fff5f6 0%, #ffe3e6 100%)";
+const PINK_GRAD = "linear-gradient(135deg, #ec4899 0%, #be185d 100%)";
 
 // ─────────────────────────────────────────────
 // SMALL REUSABLE COMPONENTS
 // ─────────────────────────────────────────────
-
 function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
   const [n, setN] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -223,10 +219,10 @@ function SkillBar({ name, pct }: { name: string; pct: number }) {
         <span className="text-sm font-medium text-foreground">{name}</span>
         <span className="text-sm text-muted-foreground">{pct}%</span>
       </div>
-      <div className="h-1.5 rounded-full bg-pink-100 overflow-hidden">
+      <div className="h-1.5 rounded-full bg-pink-50 overflow-hidden">
         <motion.div
           className="h-full rounded-full"
-          style={{ background: ROSE_GRAD }}
+          style={{ background: PINK_GRAD }}
           initial={{ width: 0 }}
           animate={{ width: inView ? `${pct}%` : 0 }}
           transition={{ duration: 1.3, ease: "easeOut", delay: 0.25 }}
@@ -238,12 +234,10 @@ function SkillBar({ name, pct }: { name: string; pct: number }) {
 
 function EyebrowLabel({ text }: { text: string }) {
   return (
-    <div className="flex items-center justify-center gap-3 mb-4">
-      <span className="h-px w-6 bg-rose-200 block" />
-      <Sparkles size={12} className="text-rose-300" />
-      <span className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-400">{text}</span>
-      <Sparkles size={12} className="text-rose-300" />
-      <span className="h-px w-6 bg-rose-200 block" />
+    <div className="flex items-center gap-2 mb-4">
+      <Sparkles size={12} className="text-pink-400" />
+      <span className="text-xs font-semibold uppercase tracking-[0.2em] text-pink-600">{text}</span>
+      <Sparkles size={12} className="text-pink-400" />
     </div>
   );
 }
@@ -257,7 +251,9 @@ function SectionTitle({ eyebrow, title, sub }: { eyebrow: string; title: string;
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.65 }}
     >
-      <EyebrowLabel text={eyebrow} />
+      <div className="flex justify-center">
+        <EyebrowLabel text={eyebrow} />
+      </div>
       <h2
         className="text-4xl md:text-5xl font-semibold text-foreground leading-tight mb-4"
         style={{ fontFamily: "'Playfair Display', serif" }}
@@ -280,14 +276,14 @@ function GlassCard({ className = "", children, delay = 0, style = {} }: {
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         border: "1px solid rgba(255,255,255,0.85)",
-        boxShadow: "0 4px 28px rgba(184,92,110,0.07)",
+        boxShadow: "0 4px 28px rgba(236,72,153,0.04)",
         ...style,
       }}
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.55, delay }}
-      whileHover={{ y: -6, boxShadow: "0 16px 40px rgba(184,92,110,0.14)", transition: { duration: 0.25 } }}
+      whileHover={{ y: -6, boxShadow: "0 16px 40px rgba(236,72,153,0.12)", transition: { duration: 0.25 } }}
     >
       {children}
     </motion.div>
@@ -302,27 +298,9 @@ function Sparkle({ size = 10, delay = 0, dur = 6, top = "50%", left = "50%" }: {
       className="sparkle absolute pointer-events-none"
       style={{ top, left, "--dur": `${dur}s`, "--del": `${delay}s` } as React.CSSProperties}
     >
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className="text-rose-300">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className="text-pink-300">
         <path d="M12 2 L13.5 9 L20 12 L13.5 15 L12 22 L10.5 15 L4 12 L10.5 9 Z" />
       </svg>
-    </div>
-  );
-}
-
-function SparkleField({ count = 8 }: { count?: number }) {
-  const positions = [
-    { top: "8%",  left: "5%",  size: 10, dur: 5.5, delay: 0 },
-    { top: "15%", left: "92%", size: 7,  dur: 7,   delay: 1.2 },
-    { top: "35%", left: "2%",  size: 8,  dur: 6.5, delay: 2.1 },
-    { top: "52%", left: "95%", size: 12, dur: 8,   delay: 0.7 },
-    { top: "70%", left: "4%",  size: 8,  dur: 6,   delay: 1.8 },
-    { top: "85%", left: "88%", size: 10, dur: 7.5, delay: 3.0 },
-    { top: "28%", left: "50%", size: 6,  dur: 9,   delay: 4.0 },
-    { top: "60%", left: "48%", size: 7,  dur: 5,   delay: 2.5 },
-  ].slice(0, count);
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
-      {positions.map((p, i) => <Sparkle key={i} {...p} />)}
     </div>
   );
 }
@@ -330,7 +308,7 @@ function SparkleField({ count = 8 }: { count?: number }) {
 // ─────────────────────────────────────────────
 // NAVIGATION
 // ─────────────────────────────────────────────
-function Nav() {
+function Nav({ onOpenContact }: { onOpenContact: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -351,29 +329,29 @@ function Nav() {
           background: "rgba(255,255,255,0.92)",
           backdropFilter: "blur(18px)",
           WebkitBackdropFilter: "blur(18px)",
-          borderBottom: "1px solid rgba(255,143,163,0.25)",
-          boxShadow: "0 2px 24px rgba(255,143,163,0.06)",
+          borderBottom: "1px solid rgba(236,72,153,0.2)",
+          boxShadow: "0 2px 24px rgba(236,72,153,0.06)",
         } : {}}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-[72px]">
           <button onClick={() => goto("#hero")} className="text-left group">
             <p className="text-xl font-semibold tracking-tight text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>Angelica Aljas</p>
-            <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground group-hover:text-primary transition-colors">Medical Virtual Assistant</p>
+            <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground group-hover:text-pink-600 transition-colors">Medical Virtual Assistant</p>
           </button>
 
           <div className="hidden md:flex items-center gap-7">
             {NAV_LINKS.map((l) => (
               <button key={l.href} onClick={() => goto(l.href)} className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium relative group">
                 {l.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-pink-400 group-hover:w-full transition-all duration-300" />
               </button>
             ))}
           </div>
 
           <button
-            onClick={() => goto("#contact")}
-            className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/40"
-            style={{ background: ROSE_GRAD }}
+            onClick={onOpenContact}
+            className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-pink-200/40"
+            style={{ background: PINK_GRAD }}
           >
             Schedule Consultation <ArrowRight size={14} />
           </button>
@@ -392,13 +370,13 @@ function Nav() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.22 }}
             className="fixed top-[72px] left-0 right-0 z-40 p-6 flex flex-col gap-4 md:hidden"
-            style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,143,163,0.25)" }}
+            style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(236,72,153,0.2)" }}
           >
             {NAV_LINKS.map((l, i) => (
               <motion.button
                 key={l.href}
                 onClick={() => goto(l.href)}
-                className="text-left text-lg font-medium text-foreground hover:text-primary transition-colors py-1 border-b border-pink-100"
+                className="text-left text-lg font-medium text-foreground hover:text-primary transition-colors py-1 border-b border-pink-50"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
@@ -406,7 +384,7 @@ function Nav() {
                 {l.label}
               </motion.button>
             ))}
-            <button onClick={() => goto("#contact")} className="mt-2 px-6 py-3.5 rounded-full text-white text-sm font-medium" style={{ background: ROSE_GRAD }}>
+            <button onClick={() => { setOpen(false); onOpenContact(); }} className="mt-2 px-6 py-3.5 rounded-full text-white text-sm font-medium text-center" style={{ background: PINK_GRAD }}>
               Schedule a Consultation
             </button>
           </motion.div>
@@ -416,11 +394,9 @@ function Nav() {
   );
 }
 
-
 // ─────────────────────────────────────────────
 // HERO
 // ─────────────────────────────────────────────
-
 function Hero() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.15 });
@@ -428,176 +404,105 @@ function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const blob1Y = useTransform(scrollYProgress, [0, 1], [0, -90]);
   const blob2Y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const textY   = useTransform(scrollYProgress, [0, 1], [0, 40]);
-
-  // Framer Motion strictly typed variants to resolve type union constraints
-  const gridVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-      },
-    },
-  };
-
-  const copyContainerVariants: Variants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.08,
-      },
-    },
-  };
-
-  const badgeVariants: Variants = {
-    hidden: { opacity: 0, y: 16 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-  };
-
-  const subtitleVariants: Variants = {
-    hidden: { y: "100%", opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.6 } }
-  };
-
-  const h1Variants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
-  };
-
-  const bodyVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
-
-  const buttonsVariants: Variants = {
-    hidden: { opacity: 0, y: 16 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.55 } }
-  };
-
-  const statsVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.6 } }
-  };
-
-  const portraitVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.92 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeOut" } },
-  };
+  const textY  = useTransform(scrollYProgress, [0, 1], [0, 40]);
 
   return (
     <section id="hero" ref={ref} className="relative min-h-screen flex items-center overflow-hidden pt-[72px]"
-      style={{ background: "linear-gradient(140deg, #fff5f6 0%, #ffffff 45%, #ffe3e6 100%)" }}
+      style={{ background: "linear-gradient(140deg, #fff5f7 0%, #f8fafc 45%, #fff1f2 100%)" }}
     >
-      {/* Parallax blobs */}
-      <motion.div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full pointer-events-none" style={{ y: blob1Y, background: "radial-gradient(circle, rgba(255,143,163,0.15), transparent 70%)" }} />
-      <motion.div className="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full pointer-events-none" style={{ y: blob2Y, background: "radial-gradient(circle, rgba(255,179,193,0.12), transparent 70%)" }} />
+      <motion.div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full pointer-events-none" style={{ y: blob1Y, background: "radial-gradient(circle, rgba(236,72,153,0.15), transparent 70%)" }} />
+      <motion.div className="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full pointer-events-none" style={{ y: blob2Y, background: "radial-gradient(circle, rgba(244,63,94,0.12), transparent 70%)" }} />
 
-      <SparkleField count={8} />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+        {[
+          { top: "8%",  left: "5%",  size: 10, dur: 5.5, delay: 0 },
+          { top: "15%", left: "92%", size: 7,  dur: 7,   delay: 1.2 },
+          { top: "35%", left: "2%",  size: 8,  dur: 6.5, delay: 2.1 },
+          { top: "52%", left: "95%", size: 12, dur: 8,   delay: 0.7 },
+          { top: "70%", left: "4%",  size: 8,  dur: 6,   delay: 1.8 },
+          { top: "85%", left: "88%", size: 10, dur: 7.5, delay: 3.0 },
+        ].map((p, i) => <Sparkle key={i} {...p} />)}
+      </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full py-20">
         <motion.div
           style={{ y: textY }}
           className="grid lg:grid-cols-[1fr_auto] gap-16 items-center"
-          variants={gridVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-
           {/* Copy */}
-          <motion.div className="max-w-2xl" variants={copyContainerVariants}>
-            <motion.div
+          <div className="max-w-2xl">
+            <div
               className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-8 border"
-              style={{ background: "rgba(255,255,255,0.8)", borderColor: "rgba(255,143,163,0.3)", boxShadow: "0 2px 12px rgba(255,143,163,0.05)" }}
-              variants={badgeVariants}
+              style={{ background: "rgba(255,255,255,0.8)", borderColor: "rgba(236,72,153,0.3)", boxShadow: "0 2px 12px rgba(236,72,153,0.05)" }}
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500" />
               </span>
-              <span className="text-xs font-semibold text-primary tracking-wide">Available for Practice Support</span>
-            </motion.div>
-
-            <div className="overflow-hidden mb-2">
-              <motion.p
-                className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-5"
-                variants={subtitleVariants}
-              >
-                Medical Virtual Assistant &amp; Clinical Support
-              </motion.p>
+              <span className="text-xs font-semibold text-pink-600 tracking-wide">Available for Practice Support</span>
             </div>
 
-            <motion.h1
+            <div className="overflow-hidden mb-2">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-pink-600 mb-5">
+                Medical Virtual Assistant &amp; Clinical Support
+              </p>
+            </div>
+
+            <h1
               className="font-semibold text-foreground leading-[1.1] mb-6"
               style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.5rem, 5vw, 4.2rem)" }}
-              variants={h1Variants}
             >
               Streamlining Medical Operations,{" "}
-              <span
-                style={{ background: "linear-gradient(135deg, #a34858, #ff8fa3, #ff758f)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-              >
+              <span style={{ background: "linear-gradient(135deg, #be185d, #ec4899, #f43f5e)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 Patient Care,
               </span>
               <br />
-              and Practice{" "}
-              <em>Administration.</em>
-            </motion.h1>
+              and Practice <em>Administration.</em>
+            </h1>
 
-            <motion.p
-              className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-lg"
-              variants={bodyVariants}
-            >
+            <p className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-lg">
               Hi, I am Angelica — a dedicated Medical Virtual Assistant with 5+ years of experience helping healthcare providers, doctors, and clinic administrators optimize operations, minimize documentation fatigue, and ensure HIPAA-compliant management of patient care.
-            </motion.p>
+            </p>
 
-            <motion.div
-              className="flex flex-wrap gap-4 mb-12"
-              variants={buttonsVariants}
-            >
+            <div className="flex flex-wrap gap-4 mb-12">
               <button
                 onClick={() => scrollTo("#contact")}
-                className="group flex items-center gap-2.5 px-8 py-4 rounded-full text-white font-medium text-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30"
-                style={{ background: ROSE_GRAD }}
+                className="group flex items-center gap-2.5 px-8 py-4 rounded-full text-white font-medium text-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-pink-300/30"
+                style={{ background: PINK_GRAD }}
               >
                 Schedule a Consultation
                 <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-200" />
               </button>
               <button
                 onClick={() => scrollTo("#services")}
-                className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium border-2 transition-all duration-300 hover:bg-rose-50"
-                style={{ borderColor: "#ff8fa3", color: "#a34858" }}
+                className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium border-2 transition-all duration-300 hover:bg-pink-50"
+                style={{ borderColor: "#ec4899", color: "#be185d" }}
               >
                 View Medical Services
               </button>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="flex flex-wrap items-center gap-6 text-sm"
-              variants={statsVariants}
-            >
+            <div className="flex flex-wrap items-center gap-6 text-sm">
               <div className="flex items-center gap-2">
                 <div className="flex">{[...Array(5)].map((_, i) => <Star key={i} size={14} fill="#f59e0b" className="text-amber-400" />)}</div>
                 <span className="text-muted-foreground font-medium">5.0 Rated</span>
               </div>
               <span className="h-4 w-px bg-border" />
-              <span className="text-muted-foreground flex items-center gap-1.5"><Shield size={14} className="text-primary" /> HIPAA Compliant Protocols</span>
+              <span className="text-muted-foreground flex items-center gap-1.5"><Shield size={14} className="text-pink-600" /> HIPAA Compliant Protocols</span>
               <span className="h-4 w-px bg-border" />
               <span className="text-muted-foreground"><strong className="text-foreground">15k+</strong> support hours</span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Portrait */}
-          <motion.div
-            className="hidden lg:flex items-center justify-center relative"
-            variants={portraitVariants}
-          >
-            {/* Orbit rings */}
-            <div className="absolute w-[420px] h-[420px] rounded-full border border-dashed" style={{ borderColor: "rgba(255,143,163,0.25)", animation: "orbit-spin 35s linear infinite" }} />
-            <div className="absolute w-[350px] h-[350px] rounded-full border" style={{ borderColor: "rgba(255,179,193,0.2)", animation: "orbit-counter 25s linear infinite" }} />
+          <div className="hidden lg:flex items-center justify-center relative">
+            <div className="absolute w-[420px] h-[420px] rounded-full border border-dashed" style={{ borderColor: "rgba(236,72,153,0.2)", animation: "orbit-spin 35s linear infinite" }} />
+            <div className="absolute w-[350px] h-[350px] rounded-full border" style={{ borderColor: "rgba(244,63,94,0.15)", animation: "orbit-counter 25s linear infinite" }} />
 
-            {/* Gradient border portrait */}
-            <div className="relative z-10" style={{ padding: "3px", borderRadius: "28px", background: "linear-gradient(135deg, #a34858, #ff8fa3, #ffb3c1)" }}>
-              <div className="w-[280px] h-[360px] rounded-[26px] overflow-hidden" style={{ background: "#fff5f6" }}>
+            <div className="relative z-10" style={{ padding: "3px", borderRadius: "28px", background: "linear-gradient(135deg, #be185d, #ec4899, #f43f5e)" }}>
+              <div className="w-[280px] h-[360px] rounded-[26px] overflow-hidden" style={{ background: "#fff5f7" }}>
                 <img
                   src={image_ikang}
                   alt="Angelica Aljas — Medical Virtual Assistant"
@@ -606,10 +511,9 @@ function Hero() {
               </div>
             </div>
 
-            {/* Floating chips */}
             <motion.div
               className="absolute z-20 -left-16 top-16 rounded-2xl border px-[16px] py-[12px]"
-              style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(255,143,163,0.3)", boxShadow: "0 4px 20px rgba(255,143,163,0.1)" }}
+              style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(236,72,153,0.3)", boxShadow: "0 4px 20px rgba(236,72,153,0.1)" }}
               animate={{ y: [-8, 8, -8] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
             >
@@ -619,63 +523,38 @@ function Hero() {
 
             <motion.div
               className="absolute z-20 -right-12 bottom-20 rounded-2xl px-4 py-3 border flex items-center gap-2"
-              style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(255,143,163,0.3)", boxShadow: "0 4px 20px rgba(255,143,163,0.1)" }}
+              style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(236,72,153,0.3)", boxShadow: "0 4px 20px rgba(236,72,153,0.1)" }}
               animate={{ y: [8, -8, 8] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             >
-              <Shield size={18} className="text-primary" />
+              <Shield size={18} className="text-pink-600" />
               <div>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Compliance</p>
                 <p className="text-xs font-semibold text-foreground">HIPAA Compliant</p>
               </div>
             </motion.div>
-
-            {/* Sparkles near portrait */}
-            {[
-              { t: "4%",  l: "72%", s: 14, d: 0 },
-              { t: "88%", l: "68%", s: 10, d: 1.5 },
-              { t: "50%", l: "4%",  s: 12, d: 2.3 },
-              { t: "10%", l: "10%", s: 8,  d: 0.7 },
-            ].map(({ t, l, s, d }, i) => (
-              <div key={i} className="sparkle absolute pointer-events-none" style={{ top: t, left: l, "--dur": "5s", "--del": `${d}s`, opacity: 0.4 } as React.CSSProperties}>
-                <svg width={s} height={s} viewBox="0 0 24 24" fill="currentColor" className="text-rose-300">
-                  <path d="M12 2 L13.5 9 L20 12 L13.5 15 L12 22 L10.5 15 L4 12 L10.5 9 Z" />
-                </svg>
-              </div>
-            ))}
-          </motion.div>
+          </div>
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        animate={{ opacity: isInView ? 1 : 0 }}
-        transition={{ duration: 0.5, delay: isInView ? 0.8 : 0 }}
-      >
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Scroll to explore</p>
-        <motion.div
-          className="w-5 h-8 rounded-full border-2 flex items-start justify-center p-1"
-          style={{ borderColor: "rgba(255,143,163,0.3)" }}
-        >
-          <motion.div className="w-1 h-2 rounded-full" style={{ background: "#ff8fa3" }} animate={{ y: [0, 12, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }} />
-        </motion.div>
-      </motion.div>
+        <div className="w-5 h-8 rounded-full border-2 flex items-start justify-center p-1" style={{ borderColor: "rgba(236,72,153,0.3)" }}>
+          <motion.div className="w-1 h-2 rounded-full" style={{ background: "#ec4899" }} animate={{ y: [0, 12, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }} />
+        </div>
+      </div>
     </section>
   );
 }
 
 // ─────────────────────────────────────────────
-// ABOUT
+// ABOUT & SKILLS
 // ─────────────────────────────────────────────
-
 function About() {
   return (
     <section id="about" className="py-28 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-
-          {/* Photo side */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: -48 }}
@@ -683,70 +562,47 @@ function About() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.72 }}
           >
-            {/* Offset frame accent */}
-            <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl border-2 border-dashed pointer-events-none" style={{ borderColor: "rgba(255,143,163,0.25)" }} />
-
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/5]" style={{ background: "#fff5f6", boxShadow: "0 24px 60px rgba(255,143,163,0.14)" }}>
-              <img
-                src={image_ikang}
-                alt="About Angelica Aljas"
-                className="w-full h-full object-cover"
-              />
+            <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl border-2 border-dashed pointer-events-none" style={{ borderColor: "rgba(236,72,153,0.2)" }} />
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5]" style={{ background: "#fff5f7", boxShadow: "0 24px 60px rgba(236,72,153,0.14)" }}>
+              <img src={image_ikang} alt="Angelica Aljas Profile" className="w-full h-full object-cover" />
             </div>
           </motion.div>
 
-          {/* Content side */}
-          <motion.div
-            initial={{ opacity: 0, x: 48 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.72 }}
-          >
-            <EyebrowLabel text="About Me" />
-            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Your Trusted Partner in Clinical Workflow Optimization
+          <div>
+            <EyebrowLabel text="About My Practice" />
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Bridging the Gap Between Administration and Patient Care
             </h2>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              With over half a decade working closely beside providers across various fields—from general medicine to specialized clinical networks—I understand the modern burden of administrative overhead. 
-            </p>
             <p className="text-muted-foreground mb-8 leading-relaxed">
-              My mission is straightforward: eliminating documentation obstacles and coordinating dynamic patient lines so you can show up fully to your true calling—clinical care.
+              Medical documentation and operational blockages shouldn't compromise patient face-time. Over the last 5 years, I have embedded myself into clinical environments to construct systematic pathways that absorb everyday backlogs seamlessly.
             </p>
 
-            {/* Profile Skill bars */}
-            {SKILLS.map((s, idx) => (
-              <SkillBar key={idx} name={s.name} pct={s.pct} />
-            ))}
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold text-pink-600 uppercase tracking-wider mb-4">Core Clinical Strengths</h3>
+              {SKILLS.map((sk, idx) => (
+                <SkillBar key={idx} name={sk.name} pct={sk.pct} />
+              ))}
+            </div>
 
-// ─────────────────────────────────────────────
-// SERVICES SECTION
-// ─────────────────────────────────────────────
-
-function Services() {
-  return (
-    <section id="services" className="py-28 bg-[#fff5f6]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <SectionTitle 
-          eyebrow="Expertise" 
-          title="Comprehensive Medical VA Services" 
-          sub="Precision support custom-tailored to minimize friction, lower wait lists, and enhance administrative clarity."
-        />
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {SERVICES.map((s, i) => (
-            <GlassCard key={i} className="p-8 flex flex-col items-start text-left" delay={i * 0.08}>
-              <div className="p-4 rounded-2xl mb-6 text-primary bg-pink-50 border border-rose-100">
-                <s.icon size={24} />
+            <div className="border-t border-slate-100 pt-6">
+              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Keep Track Systems</h4>
+              <div className="flex flex-wrap gap-2">
+                {TOOLS.map((t, i) => (
+                  <span key={i} className="text-xs font-medium px-3 py-1 rounded-md bg-slate-50 border border-slate-100 text-slate-600">{t}</span>
+                ))}
               </div>
-              <h3 className="text-xl font-medium mb-3 text-foreground">{s.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{s.desc}</p>
-            </GlassCard>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 border-t border-slate-100 pt-16">
+          {STATS.map((st, idx) => (
+            <div key={idx} className="text-center">
+              <p className="text-4xl md:text-5xl font-bold text-pink-600 mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <CountUp target={st.val} suffix={st.suf} />
+              </p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{st.label}</p>
+            </div>
           ))}
         </div>
       </div>
@@ -755,195 +611,253 @@ function Services() {
 }
 
 // ─────────────────────────────────────────────
-// PROJECTS & CASE STUDIES SECTION
+// SERVICES
 // ─────────────────────────────────────────────
+function Services() {
+  return (
+    <section id="services" className="py-28" style={{ background: "linear-gradient(180deg, #f8fafc 0%, #fff5f7 100%)" }}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <SectionTitle 
+          eyebrow="Capabilities" 
+          title="Clinical Support Offerings" 
+          sub="Tailored workflows crafted to save hours, eliminate charting fatigue, and support your regulatory protocols." 
+        />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {SERVICES.map((s, idx) => {
+            const Icon = s.icon;
+            return (
+              <GlassCard key={idx} className="p-8 group" delay={idx * 0.05}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 bg-pink-50 group-hover:bg-pink-600 text-pink-600 group-hover:text-white">
+                  <Icon size={22} />
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-slate-800">{s.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+              </GlassCard>
+            );
+          })}
+        </div>
 
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-20">
+          {BENEFITS.map((b, i) => {
+            const Icon = b.icon;
+            return (
+              <div key={i} className="p-6 rounded-2xl bg-white/60 border border-slate-100">
+                <Icon size={20} className="text-pink-600 mb-3" />
+                <h4 className="font-semibold text-sm mb-1.5">{b.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{b.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// CASE STUDIES / PROJECTS
+// ─────────────────────────────────────────────
 function Projects() {
+  const [active, setActive] = useState(0);
+
   return (
     <section id="projects" className="py-28 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <SectionTitle 
-          eyebrow="Outcomes" 
-          title="Proven Clinic Case Transformations" 
-          sub="Real metrics reflecting reduced backlog timelines, accelerated authorization speed, and optimization shifts."
+          eyebrow="Case Studies" 
+          title="Proven Clinic Transformations" 
+          sub="Real metrics detailing clinical operational optimizations and measurable overhead containment timelines." 
         />
 
-        <div className="space-y-20">
-          {PROJECTS.map((p, i) => (
-            <motion.div 
-              key={i}
-              className={`grid lg:grid-cols-2 gap-12 items-center`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.65 }}
-            >
-              {/* Image box */}
-              <div className={`relative overflow-hidden rounded-3xl border border-rose-100 shadow-xl shadow-rose-100/30 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-                <img src={p.image} alt={p.client} className="w-full h-auto aspect-[4/3] object-cover" />
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-semibold text-primary border border-rose-100">
-                  {p.type}
-                </div>
-              </div>
-
-              {/* Data and metrics box */}
-              <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
-                <h3 className="text-2xl font-semibold text-foreground mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>{p.client}</h3>
-                <p className="text-primary font-medium text-sm mb-6 flex flex-wrap gap-2">
-                  {p.services.map((s, idx) => <span key={idx} className="bg-pink-50 border border-rose-100/60 px-3 py-1 rounded-full text-xs">{s}</span>)}
-                </p>
-                <h4 className="text-xl font-semibold text-foreground mb-4 leading-snug">{p.headline}</h4>
-                <p className="text-muted-foreground mb-8 text-sm leading-relaxed">{p.outcome}</p>
-
-                {/* Metrics Table Comparison */}
-                <div className="grid grid-cols-2 gap-4 border-t border-pink-100 pt-6">
-                  <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Before Support</p>
-                    {p.before.map((b, idx) => (
-                      <div key={idx} className="mb-2">
-                        <p className="text-xs text-muted-foreground">{b.label}</p>
-                        <p className="text-sm font-semibold text-rose-700">{b.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="border-l border-pink-50 pl-6">
-                    <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">Optimized Result</p>
-                    {p.after.map((a, idx) => (
-                      <div key={idx} className="mb-2">
-                        <p className="text-xs text-muted-foreground">{a.label}</p>
-                        <p className="text-sm font-semibold text-emerald-600">{a.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────
-// PRICING SECTION
-// ─────────────────────────────────────────────
-
-function Pricing() {
-  return (
-    <section id="pricing" className="py-28 bg-[#fff5f6]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <SectionTitle 
-          eyebrow="Investment" 
-          title="Flexible Practice Retainers" 
-          sub="Scalable monthly solutions configured strictly to adapt to individual operational workflows and volume constraints."
-        />
-
-        <div className="grid lg:grid-cols-3 gap-8 items-stretch">
-          {PRICING.map((p, i) => (
-            <motion.div
-              key={i}
-              className={`rounded-3xl p-8 relative flex flex-col justify-between bg-white border ${p.popular ? 'border-primary shadow-xl shadow-rose-200/40' : 'border-rose-100'}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: i * 0.1 }}
-            >
-              {p.popular && (
-                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-white text-[11px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-md">
-                  Most Popular Partner
-                </span>
-              )}
-
-              <div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">{p.name}</h3>
-                <p className="text-muted-foreground text-xs mb-6 min-h-[32px]">{p.desc}</p>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold text-foreground">{p.monthly}</span>
-                  <span className="text-muted-foreground text-xs">/ month</span>
-                </div>
-                <p className="text-xs text-primary font-medium mb-6 bg-pink-50 border border-rose-100/50 inline-block px-2.5 py-1 rounded-md">
-                  {p.hrs} ({p.hourly}/hr)
-                </p>
-                <div className="h-px bg-pink-50 w-full mb-6" />
-                
-                <ul className="space-y-3 mb-8">
-                  {p.features.map((f, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-sm text-muted-foreground leading-tight">
-                      <Check size={14} className="text-primary mt-0.5 shrink-0" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
+        <div className="grid lg:grid-cols-[1fr_1.3fr] gap-12 items-center">
+          <div className="flex flex-col gap-4">
+            {PROJECTS.map((p, idx) => (
               <button
-                onClick={() => scrollTo("#contact")}
-                className={`w-full py-3.5 rounded-full font-medium text-sm transition-all duration-300 ${p.popular ? 'text-white shadow-lg shadow-primary/20' : 'text-primary bg-pink-50 border border-rose-100 hover:bg-pink-100'}`}
-                style={p.popular ? { background: ROSE_GRAD } : {}}
+                key={idx}
+                onClick={() => setActive(idx)}
+                className="text-left p-6 rounded-2xl border transition-all duration-300"
+                style={active === idx ? {
+                  borderColor: "rgba(236,72,153,0.3)",
+                  background: "rgba(255,245,247,0.7)",
+                  boxShadow: "0 4px 20px rgba(236,72,153,0.05)"
+                } : {
+                  borderColor: "rgba(0,0,0,0.05)",
+                  background: "transparent"
+                }}
               >
-                {p.cta}
+                <span className="text-xs font-semibold text-pink-600 tracking-wider uppercase">{p.type}</span>
+                <h3 className="text-xl font-bold mt-1 text-slate-800">{p.client}</h3>
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {p.services.slice(0, 2).map((s, i) => (
+                    <span key={i} className="text-[10px] bg-white border px-2 py-0.5 rounded-full text-slate-500">{s}</span>
+                  ))}
+                </div>
               </button>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+            ))}
+          </div>
 
-// ─────────────────────────────────────────────
-// TESTIMONIALS SECTION
-// ─────────────────────────────────────────────
-
-function Testimonials() {
-  const [active, setActive] = useState(0);
-
-  return (
-    <section id="testimonials" className="py-28 bg-white overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6">
-        <SectionTitle 
-          eyebrow="Reviews" 
-          title="Endorsed by Clinical Professionals" 
-        />
-
-        <div className="relative min-h-[280px] flex flex-col items-center text-center max-w-3xl mx-auto">
-          <Quote size={48} className="text-rose-100 mb-6 absolute -top-8 -left-6 opacity-60 pointer-events-none" />
-          
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.35 }}
-              className="z-10"
+              transition={{ duration: 0.4 }}
+              className="rounded-3xl border border-slate-100 overflow-hidden shadow-xl bg-white shadow-slate-100"
             >
-              <p className="text-lg md:text-xl text-foreground font-medium leading-relaxed mb-8 italic">
-                "{TESTIMONIALS[active].text}"
+              <div className="h-56 relative overflow-hidden bg-slate-100">
+                <img src={PROJECTS[active].image} alt={PROJECTS[active].client} className="w-full h-full object-cover" />
+                <div className="absolute top-4 left-4 bg-pink-600 text-white text-xs px-3 py-1 rounded-full font-medium">
+                  {PROJECTS[active].type}
+                </div>
+              </div>
+
+              <div className="p-8">
+                <h4 className="text-xl font-semibold text-pink-700 mb-2">"{PROJECTS[active].headline}"</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6">{PROJECTS[active].outcome}</p>
+
+                <div className="grid grid-cols-2 gap-4 bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Before Optimization</span>
+                    {PROJECTS[active].before.map((b, i) => (
+                      <div key={i} className="text-xs mb-1 text-slate-600">
+                        <strong>{b.value}</strong> — {b.label}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="border-l border-slate-200 pl-4">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-pink-600 block mb-2">With Angelica Support</span>
+                    {PROJECTS[active].after.map((a, i) => (
+                      <div key={i} className="text-xs mb-1 text-pink-700 font-medium flex items-center gap-1.5">
+                        <Check size={12} className="text-emerald-500 shrink-0" />
+                        <span><strong>{a.value}</strong> — {a.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// PRICING
+// ─────────────────────────────────────────────
+function Pricing() {
+  return (
+    <section id="pricing" className="py-28" style={{ background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)" }}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <SectionTitle 
+          eyebrow="Retainers" 
+          title="Transparent Practice Plans" 
+          sub="Predictable monthly pricing scales to sync with single clinics or growing multi-provider medical facilities." 
+        />
+
+        <div className="grid lg:grid-cols-3 gap-8 items-start">
+          {PRICING.map((p, idx) => (
+            <div
+              key={idx}
+              className={`rounded-3xl p-8 bg-white border relative transition-all duration-300 ${
+                p.popular ? "border-pink-500 lg:scale-[1.03] shadow-xl shadow-pink-500/5" : "border-slate-100"
+              }`}
+            >
+              {p.popular && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-pink-600 text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full">
+                  Most Requested Partner tier
+                </span>
+              )}
+              <h3 className="text-xl font-bold text-slate-800 mb-1">{p.name}</h3>
+              <p className="text-xs text-muted-foreground mb-6">{p.desc}</p>
+
+              <div className="flex items-baseline gap-1 mb-2">
+                <span className="text-4xl font-bold text-slate-900">{p.monthly}</span>
+                <span className="text-sm text-muted-foreground">/ month</span>
+              </div>
+              <div className="text-xs text-pink-600 font-medium mb-6 bg-pink-50/50 inline-block px-2.5 py-1 rounded-md">
+                {p.hrs} • approximated at {p.hourly}/hr
+              </div>
+
+              <button
+                onClick={() => scrollTo("#contact")}
+                className="w-full py-3 rounded-xl font-medium text-sm transition-all duration-300 mb-8"
+                style={p.popular ? { background: PINK_GRAD, color: "white" } : { border: "1px solid #e2e8f0", backgroundColor: "#f8fafc", color: "#334155" }}
+              >
+                {p.cta}
+              </button>
+
+              <div className="space-y-3.5">
+                {p.features.map((f, i) => (
+                  <div key={i} className="flex items-start gap-3 text-xs text-slate-600">
+                    <Check size={14} className="text-pink-500 shrink-0 mt-0.5" />
+                    <span>{f}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// TESTIMONIALS
+// ─────────────────────────────────────────────
+function Testimonials() {
+  const [curr, setCurr] = useState(0);
+
+  const next = () => setCurr((prev) => (prev + 1) % TESTIMONIALS.length);
+  const prev = () => setCurr((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+
+  return (
+    <section id="testimonials" className="py-28 bg-white overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6 lg:px-10">
+        <SectionTitle eyebrow="Endorsements" title="Trusted by Providers" />
+
+        <div className="relative border border-slate-100 p-8 md:p-12 rounded-3xl bg-slate-50/50">
+          <Quote size={54} className="text-pink-100 absolute top-6 left-6 pointer-events-none" />
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={curr}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35 }}
+              className="relative z-10 text-center md:text-left"
+            >
+              <p className="text-lg md:text-xl text-slate-700 italic leading-relaxed font-light mb-8">
+                "{TESTIMONIALS[curr].text}"
               </p>
-              <div className="flex items-center justify-center gap-4">
-                <img src={TESTIMONIALS[active].img} alt={TESTIMONIALS[active].name} className="w-12 h-12 rounded-full border-2 border-primary object-cover" />
-                <div className="text-left">
-                  <h4 className="font-semibold text-foreground text-sm">{TESTIMONIALS[active].name}</h4>
-                  <p className="text-xs text-muted-foreground">{TESTIMONIALS[active].role}</p>
+
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="flex items-center gap-4 text-left">
+                  <img src={TESTIMONIALS[curr].img} alt={TESTIMONIALS[curr].name} className="w-12 h-12 rounded-full object-cover border" />
+                  <div>
+                    <h4 className="font-bold text-slate-800 text-sm">{TESTIMONIALS[curr].name}</h4>
+                    <p className="text-xs text-muted-foreground">{TESTIMONIALS[curr].role}</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-1">
+                  {[...Array(TESTIMONIALS[curr].rating)].map((_, i) => (
+                    <Star key={i} size={14} fill="#f59e0b" className="text-amber-400" />
+                  ))}
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
 
-          {/* Controls */}
-          <div className="flex gap-3 mt-12 z-20">
-            <button 
-              onClick={() => setActive(prev => (prev === 0 ? TESTIMONIALS.length - 1 : prev - 1))}
-              className="p-3 rounded-full border border-rose-100 text-muted-foreground hover:text-primary hover:bg-pink-50 transition-colors"
-            >
+          <div className="flex justify-center md:justify-end gap-2 mt-8 md:mt-4">
+            <button onClick={prev} className="p-2 rounded-full border bg-white hover:bg-slate-50 transition-colors" aria-label="Previous testimonial">
               <ChevronLeft size={16} />
             </button>
-            <button 
-              onClick={() => setActive(prev => (prev === TESTIMONIALS.length - 1 ? 0 : prev + 1))}
-              className="p-3 rounded-full border border-rose-100 text-muted-foreground hover:text-primary hover:bg-pink-50 transition-colors"
-            >
+            <button onClick={next} className="p-2 rounded-full border bg-white hover:bg-slate-50 transition-colors" aria-label="Next testimonial">
               <ChevronRight size={16} />
             </button>
           </div>
@@ -954,110 +868,255 @@ function Testimonials() {
 }
 
 // ─────────────────────────────────────────────
-// CONTACT SECTION
+// CONTACT FORM (Restored Layout from image_3a28cb.png)
 // ─────────────────────────────────────────────
-
 function Contact() {
-  const [formState, setFormState] = useState({ name: "", email: "", clinic: "", note: "" });
+  const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
   const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setSent(true);
-    setTimeout(() => setSent(false), 4000);
-    setFormState({ name: "", email: "", clinic: "", note: "" });
+    setForm({ name: "", email: "", service: "", message: "" });
   };
 
   return (
-    <section id="contact" className="py-28 bg-[#fff5f6] relative">
-      <div className="max-w-4xl mx-auto px-6">
-        <SectionTitle 
-          eyebrow="Connect" 
-          title="Initiate a Workflow Triage Session" 
-          sub="Let's align your operational constraints with strict HIPAA guidelines to optimize administrative tasks."
-        />
-
-        <GlassCard className="p-8 md:p-12 border border-rose-100/60 shadow-2xl shadow-rose-100/40">
-          <form onSubmit={handleSubmit} className="space-y-6 text-left">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Provider/Contact Name</label>
-                <input 
-                  type="text" required 
-                  value={formState.name} onChange={e => setFormState({...formState, name: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-rose-100 bg-white/70 focus:outline-none focus:border-primary text-sm transition-colors text-foreground" 
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Secure Practice Email</label>
-                <input 
-                  type="email" required 
-                  value={formState.email} onChange={e => setFormState({...formState, email: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-rose-100 bg-white/70 focus:outline-none focus:border-primary text-sm transition-colors text-foreground" 
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Practice / Clinic Name</label>
-              <input 
-                type="text" 
-                value={formState.clinic} onChange={e => setFormState({...formState, clinic: e.target.value})}
-                className="w-full px-4 py-3 rounded-xl border border-rose-100 bg-white/70 focus:outline-none focus:border-primary text-sm transition-colors text-foreground" 
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Current System Impediments or EHR Setup</label>
-              <textarea 
-                rows={4} required
-                value={formState.note} onChange={e => setFormState({...formState, note: e.target.value})}
-                className="w-full px-4 py-3 rounded-xl border border-rose-100 bg-white/70 focus:outline-none focus:border-primary text-sm transition-colors text-foreground resize-none" 
-              />
+    <section id="contact" className="py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-start">
+          
+          {/* Left Column: Content Info */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="h-px w-4 bg-pink-200 block" />
+              <Sparkles size={12} className="text-pink-400" />
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-pink-600">GET IN TOUCH</span>
+              <Sparkles size={12} className="text-pink-400" />
+              <span className="h-px w-4 bg-pink-200 block" />
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-4 rounded-full text-white font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:-translate-y-0.5"
-              style={{ background: ROSE_GRAD }}
-            >
-              {sent ? (
-                <>Meeting Request Processed <Check size={16} /></>
-              ) : (
-                <>Request Practice Triage Consultation <Send size={14} /></>
-              )}
-            </button>
-          </form>
-        </GlassCard>
+            <h2 className="text-5xl lg:text-6xl font-normal text-slate-900 leading-[1.15] mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Let's Build Something <br />
+              <span className="italic text-pink-600 font-serif">Amazing Together</span>
+            </h2>
+
+            <p className="text-base text-slate-500 leading-relaxed mb-12 max-w-lg">
+              Ready to reclaim your time and scale your business? I would love to learn about your goals and show you exactly how I can help.
+            </p>
+
+            {/* Info Cards Row/Stack */}
+            <div className="space-y-6 mb-10">
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-full bg-pink-50 flex items-center justify-center text-pink-500 shrink-0">
+                  <Mail size={16} />
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">EMAIL</p>
+                  <p className="text-sm font-medium text-slate-800">hello@angelicaaljas.com</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-full bg-pink-50 flex items-center justify-center text-pink-500 shrink-0">
+                  <Clock size={16} />
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">RESPONSE TIME</p>
+                  <p className="text-sm font-medium text-slate-800">Within 24 hrs, Mon – Fri</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-full bg-pink-50 flex items-center justify-center text-pink-500 shrink-0">
+                  <MapPin size={16} />
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">LOCATION</p>
+                  <p className="text-sm font-medium text-slate-800">Philippines — Available Worldwide</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Icons */}
+            <div className="flex gap-3">
+              <a href="#" className="w-9 h-9 rounded-full border border-pink-200 flex items-center justify-center text-pink-600 hover:bg-pink-50 transition-colors" aria-label="Instagram">
+                <Instagram size={14} />
+              </a>
+              <a href="#" className="w-9 h-9 rounded-full border border-pink-200 flex items-center justify-center text-pink-600 hover:bg-pink-50 transition-colors" aria-label="LinkedIn">
+                <Linkedin size={14} />
+              </a>
+              <a href="#" className="w-9 h-9 rounded-full border border-pink-200 flex items-center justify-center text-pink-600 hover:bg-pink-50 transition-colors" aria-label="Twitter">
+                <Twitter size={14} />
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column: Form Box Card */}
+          <div className="p-8 md:p-10 rounded-3xl" style={{ backgroundColor: "#FFF0F3" }}>
+            {sent ? (
+              <div className="text-center py-16">
+                <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-4">
+                  <Check size={24} />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-1">Message Dispatched Securely</h3>
+                <p className="text-xs text-muted-foreground">Thank you! I will touch base under 24 hours.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-pink-700/80 mb-2">FULL NAME</label>
+                    <input
+                      type="text" required value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-pink-100 bg-white focus:outline-none focus:border-pink-400 text-sm placeholder-slate-300"
+                      placeholder="Jane Smith"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-pink-700/80 mb-2">EMAIL ADDRESS</label>
+                    <input
+                      type="email" required value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-pink-100 bg-white focus:outline-none focus:border-pink-400 text-sm placeholder-slate-300"
+                      placeholder="jane@company.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-pink-700/80 mb-2">SERVICE NEEDED</label>
+                  <select
+                    required value={form.service}
+                    onChange={(e) => setForm({ ...form, service: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border border-pink-100 bg-white focus:outline-none focus:border-pink-400 text-sm text-slate-700 appearance-none bg-no-repeat bg-right"
+                    style={{ backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23be185d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>")`, paddingRight: "2.5rem", backgroundPosition: "calc(100% - 12px) center", backgroundSize: "16px" }}
+                  >
+                    <option value="" disabled>Select a service...</option>
+                    <option value="prior-auth">Prior Authorization Support</option>
+                    <option value="calendar">Calendar &amp; Schedule Management</option>
+                    <option value="ehr">Chart Prep &amp; EHR Support</option>
+                    <option value="triage">Email &amp; Digital Fax Triage</option>
+                    <option value="full">Comprehensive Support Retainer</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-pink-700/80 mb-2">TELL ME ABOUT YOUR BUSINESS</label>
+                  <textarea
+                    rows={4} required value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border border-pink-100 bg-white focus:outline-none focus:border-pink-400 text-sm resize-none placeholder-slate-300 leading-relaxed"
+                    placeholder="Share a bit about your business, the challenges you are facing, and what you need help with..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 rounded-xl text-white font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2 hover:opacity-95 hover:shadow-lg hover:shadow-pink-400/20"
+                  style={{ background: PINK_GRAD }}
+                >
+                  Send Message <Send size={13} />
+                </button>
+              </form>
+            )}
+          </div>
+
+        </div>
       </div>
     </section>
   );
 }
 
 // ─────────────────────────────────────────────
-// MAIN APP COMPONENT
+// FOOTER (Restored Layout from image_3a28ea.png)
 // ─────────────────────────────────────────────
-
-export default function App() {
+function Footer() {
   return (
-    <div className="bg-[#fff5f6] text-foreground min-h-screen relative antialiased selection:bg-pink-100 selection:text-rose-800">
-      <Nav />
-      <Hero />
-      <About />
-      <Services />
-      <Projects />
-      <Pricing />
-      <Testimonials />
-      <Contact />
-
-      {/* FOOTER */}
-      <footer className="py-12 border-t border-pink-100 bg-white text-sm text-muted-foreground">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <p>© {new Date().getFullYear()} Angelica Aljas. Fully Protected HIPAA Compliant Administrative Ecosystem.</p>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-primary transition-colors"><Linkedin size={16} /></a>
-            <a href="#" className="hover:text-primary transition-colors"><Mail size={16} /></a>
+    <footer className="py-16 text-slate-500 border-t" style={{ backgroundColor: "#FFF8F9", borderColor: "rgba(236,72,153,0.08)" }}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        
+        {/* Main 3-Column Content */}
+        <div className="grid md:grid-cols-3 gap-12 md:gap-8 items-start mb-16">
+          
+          {/* Column 1: Branding Info */}
+          <div>
+            <h3 className="text-xl font-bold text-slate-800 tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Angelica Aljas
+            </h3>
+            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-pink-600/70 mb-4">VIRTUAL ASSISTANT</p>
+            <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
+              Helping businesses stay organized, efficient, and stress-free — one task at a time.
+            </p>
           </div>
+
+          {/* Column 2: Quick Links */}
+          <div>
+            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 mb-4">QUICK LINKS</h4>
+            <div className="flex flex-col gap-3 items-start text-sm">
+              {NAV_LINKS.map((l) => (
+                <button key={l.href} onClick={() => scrollTo(l.href)} className="hover:text-pink-600 transition-colors">
+                  {l.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Column 3: Connect socials */}
+          <div>
+            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 mb-4">CONNECT</h4>
+            
+            <div className="flex gap-2.5 mb-5">
+              <a href="#" className="w-8 h-8 rounded-full border border-pink-200 flex items-center justify-center text-pink-600 hover:bg-pink-50 transition-colors" aria-label="Instagram">
+                <Instagram size={13} />
+              </a>
+              <a href="#" className="w-8 h-8 rounded-full border border-pink-200 flex items-center justify-center text-pink-600 hover:bg-pink-50 transition-colors" aria-label="LinkedIn">
+                <Linkedin size={13} />
+              </a>
+              <a href="#" className="w-8 h-8 rounded-full border border-pink-200 flex items-center justify-center text-pink-600 hover:bg-pink-50 transition-colors" aria-label="Twitter">
+                <Twitter size={13} />
+              </a>
+            </div>
+
+            <p className="text-sm text-slate-600 font-medium">hello@angelicaaljas.com</p>
+          </div>
+
         </div>
-      </footer>
+
+        {/* Bottom Strip Copyright */}
+        <div className="border-t border-pink-100/50 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          <p>© {new Date().getFullYear()} Angelica Aljas. All rights reserved.</p>
+          <p className="flex items-center gap-1">
+            Made with <Heart size={11} fill="#ec4899" className="text-pink-500 animate-pulse" /> for business owners everywhere
+          </p>
+        </div>
+
+      </div>
+    </footer>
+  );
+}
+
+// ─────────────────────────────────────────────
+// MAIN APPLICATION ROOT WRAPPER
+// ─────────────────────────────────────────────
+export default function App() {
+  const triggerContactScroll = () => {
+    scrollTo("#contact");
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 antialiased font-sans">
+      <Nav onOpenContact={triggerContactScroll} />
+      <main>
+        <Hero />
+        <About />
+        <Services />
+        <Projects />
+        <Pricing />
+        <Testimonials />
+        <Contact />
+      </main>
+      <Footer />
     </div>
   );
 }
