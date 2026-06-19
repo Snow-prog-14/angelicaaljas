@@ -1,13 +1,14 @@
 import image_ikang from "../imports/ikang.jpg";
 import React, { useState, useEffect, useRef, FormEvent } from "react";
-import { motion, useInView, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import {
   Mail, Instagram, Linkedin, Twitter,
   Star, Check, ArrowRight, Menu, X, ChevronLeft, ChevronRight,
   Clock, TrendingUp, Calendar, FileText, Zap, Shield,
   Send, Sparkles, MapPin, Heart, Quote
 } from "lucide-react";
-
+import { LazyMotion, domAnimation } from "framer-motion";
 // ─────────────────────────────────────────────
 // GLOBAL STYLES (keyframes, scrollbar, etc.)
 // ─────────────────────────────────────────────
@@ -319,7 +320,6 @@ function Nav({ onOpenContact }: { onOpenContact: () => void }) {
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: GLOBAL_CSS }} />
       <nav
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         style={scrolled ? {
@@ -409,13 +409,13 @@ function Hero() {
       <motion.div className="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full pointer-events-none" style={{ y: blob2Y, background: "radial-gradient(circle, rgba(244,63,94,0.12), transparent 70%)" }} />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full py-20">
-        <motion.div
-          style={{ y: textY }}
-          className="grid lg:grid-cols-[1fr_auto] gap-16 items-center"
-          variants={STAGGER_CONTAINER}
-          initial="hidden"
-          animate="visible"
-        >
+       <motion.div
+  style={{ y: textY }}
+  className="grid lg:grid-cols-[1fr_auto] gap-16 items-center"
+  variants={STAGGER_CONTAINER}
+  initial="hidden"
+  animate="visible"
+viewport={{ once: true, amount: 0.25 }}>
           <div>
             <motion.div
               variants={FADE_UP_VARIANTS}
@@ -498,8 +498,7 @@ function About() {
             variants={FADE_UP_VARIANTS}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }}
-          >
+viewport={{ once: true, amount: 0.25 }}          >
             <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl border-2 border-dashed pointer-events-none" style={{ borderColor: "rgba(236,72,153,0.2)" }} />
             <div className="relative rounded-3xl overflow-hidden aspect-[4/5]" style={{ background: "#fff5f7", boxShadow: "0 24px 60px rgba(236,72,153,0.14)" }}>
               <img src={resolveImageSrc(image_ikang)} alt="Angelica Aljas Profile" className="w-full h-full object-cover" />
@@ -575,8 +574,7 @@ function About() {
           variants={STAGGER_CONTAINER}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.2 }}
-        >
+viewport={{ once: true, amount: 0.25 }}        >
           {STATS.map((st, idx) => (
             <motion.div key={idx} className="text-center" variants={FADE_UP_VARIANTS}>
               <p className="text-4xl md:text-5xl font-bold text-pink-600 mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -923,12 +921,19 @@ export default function App() {
       "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css";
     document.head.appendChild(link);
 
+    // inject animations once
+    const style = document.createElement("style");
+    style.innerHTML = GLOBAL_CSS;
+    document.head.appendChild(style);
+
     return () => {
       document.head.removeChild(link);
+      document.head.removeChild(style);
     };
   }, []);
 
-  return (
+return (
+  <LazyMotion features={domAnimation}>
     <div className="min-h-screen bg-slate-50 text-slate-900 antialiased font-sans">
       <Nav onOpenContact={() => scrollTo("#contact")} />
       <main>
@@ -942,5 +947,6 @@ export default function App() {
       </main>
       <Footer />
     </div>
-  );
+  </LazyMotion>
+);
 }
