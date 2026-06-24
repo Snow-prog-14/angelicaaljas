@@ -113,32 +113,49 @@ const PROJECTS = [
 
 const PRICING = [
   {
-    name: "Essential Support",
-    monthly: "$597",
-    hourly: "$25",
-    hrs: "20 hrs / month",
-    desc: "Perfect for solo practitioners needing part-time clinic support.",
-    features: ["HIPAA-compliant data handling", "Scheduling & calendar coordination", "Basic email & digital fax triage", "Patient record updates", "Prior authorization assistance", "Response within 24 hours"],
+    name: "Starter Pack",
+    price: "$8 / hour",
+    subtext: "Flexible schedule (up to 8 hrs/day)",
+    desc: "",
+    features: [
+      "Insurance verification",
+      "Fax & email management",
+      "Clinic calendar coordination",
+      "Appointment scheduling support",
+      "Response within 24 hours",
+    ],
     cta: "Schedule a Consultation",
     popular: false,
   },
   {
-    name: "Practice Partner",
-    monthly: "$1,097",
-    hourly: "$35",
-    hrs: "40 hrs / month",
-    desc: "Ideal for growing clinics seeking dedicated workflow optimization.",
-    features: ["Everything in Essential", "Full prior authorization management", "EHR chart preparation & filing", "Phone support & patient callbacks", "Insurance verification support", "Priority response (< 4 hrs)", "Weekly status touchpoints"],
+    name: "Professional Pack (Part-Time Option)",
+    price: "$10 / hour",
+    subtext: "Flexible weekly hours (you decide)",
+    desc: "",
+    features: [
+      "Includes everything in Starter, plus:",
+      "Prior authorization assistance",
+      "Chart preparation & administrative tasks",
+      "Handling patient calls & scheduling",
+      "Priority response (< 4 hrs)",
+      "Weekly status updates",
+    ],
     cta: "Schedule a Consultation",
     popular: true,
   },
   {
-    name: "Dedicated Clinical VA",
-    monthly: "$1,897",
-    hourly: "$45",
-    hrs: "80 hrs / month",
-    desc: "For busy multi-provider practices needing comprehensive assistance.",
-    features: ["Everything in Practice Partner", "Dedicated daily clinic coverage", "EHR management (Epic/Athena)", "Direct physician collaboration", "Urgent request handling (< 1 hr)", "Referral & hospital coordination", "Custom workflow creation"],
+    name: "Platinum / Dedicated VA",
+    price: "$14 / hour",
+    subtext: "Full-time dedicated support",
+    desc: "",
+    features: [
+      "Includes everything in Professional, plus:",
+      "Full clinic calendar management",
+      "Direct support for providers",
+      "Advanced coordination of patient scheduling & communication",
+      "Urgent request handling (< 1 hr)",
+      "Custom workflow setup",
+    ],
     cta: "Schedule a Consultation",
     popular: false,
   },
@@ -720,11 +737,10 @@ function Pricing() {
               
               <div className="mb-6 pb-6 border-b border-slate-100">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold tracking-tight text-slate-900">{p.monthly}</span>
-                  <span className="text-sm font-semibold text-muted-foreground">/ month</span>
+                  <span className="text-4xl font-bold tracking-tight text-slate-900">{p.price}</span>
                 </div>
                 <div className="mt-2 text-xs text-slate-500 font-medium">
-                  Equivalent to <span className="text-pink-600 font-bold">{p.hourly}</span> per hour • <span className="underline">{p.hrs}</span>
+                  {p.subtext}
                 </div>
               </div>
 
@@ -859,7 +875,7 @@ function Contact() {
             </div>
 
             <button className="w-full bg-pink-600 text-white py-4 rounded-xl font-medium hover:bg-pink-700 transition">
-              Send Message ✈
+              Send Message 
             </button>
           </form>
         </div>
