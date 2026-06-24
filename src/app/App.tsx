@@ -1,6 +1,7 @@
 import image_ikang from "../imports/ikang.jpg";
 import React, { useState, useEffect, useRef, FormEvent } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
+import FloatingBackground from "./components/FloatingBackground";
 import {
   Mail, Instagram, Linkedin, Twitter,
   Star, Check, ArrowRight, Menu, X, ChevronLeft, ChevronRight,
@@ -634,22 +635,34 @@ function Services() {
   return (
     <section id="services" className="py-28" style={{ background: "linear-gradient(180deg, #f8fafc 0%, #fff5f7 100%)" }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="text-center mb-16 max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-16 max-w-2xl mx-auto"
+          variants={FADE_UP_VARIANTS}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+        >
           <div className="flex justify-center"><EyebrowLabel text="Capabilities" /></div>
           <h2 className="text-4xl font-semibold text-slate-900 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Clinical Support Offerings</h2>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        </motion.div>
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={STAGGER_CONTAINER}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.15 }}
+        >
           {SERVICES.map((s, idx) => {
             const Icon = s.icon;
             return (
-              <div key={idx} className="p-8 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <motion.div key={idx} variants={FADE_UP_VARIANTS} className="p-8 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-pink-50 text-pink-600"><Icon size={22} /></div>
                 <h3 className="text-xl font-semibold mb-3 text-slate-800">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -662,15 +675,27 @@ function Projects() {
   return (
     <section id="projects" className="py-28 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="text-center mb-16 max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-16 max-w-2xl mx-auto"
+          variants={FADE_UP_VARIANTS}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+        >
           <div className="flex justify-center"><EyebrowLabel text="Case Studies" /></div>
           <h2 className="text-4xl font-semibold text-slate-900 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Proven Practice Outcomes</h2>
           <p className="text-sm text-muted-foreground">Real-world workflow transformations achieved across partner clinical ecosystems.</p>
-        </div>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <motion.div 
+          className="grid lg:grid-cols-3 gap-8"
+          variants={STAGGER_CONTAINER}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.15 }}
+        >
           {PROJECTS.map((p, idx) => (
-            <div key={idx} className="bg-slate-50/60 border border-slate-100 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between h-full">
+            <motion.div key={idx} variants={FADE_UP_VARIANTS} className="bg-slate-50/60 border border-slate-100 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between h-full">
               <div>
                 <div className="h-48 overflow-hidden relative">
                   <img src={p.image} alt={p.client} className="w-full h-full object-cover" />
@@ -718,9 +743,9 @@ function Projects() {
               <div className="p-6 pt-0 border-t border-dashed border-slate-200/60 mt-auto bg-slate-100/30">
                 <p className="text-xs text-muted-foreground leading-relaxed mt-4">{p.outcome}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -733,16 +758,29 @@ function Pricing() {
   return (
     <section id="pricing" className="py-28 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="text-center mb-16 max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-16 max-w-2xl mx-auto"
+          variants={FADE_UP_VARIANTS}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+        >
           <div className="flex justify-center"><EyebrowLabel text="Flexible Plans" /></div>
           <h2 className="text-4xl font-semibold text-slate-900 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Predictable Investment</h2>
           <p className="text-sm text-muted-foreground">Select a scalable tiered engagement standard built around specialized healthcare hours.</p>
-        </div>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8 items-start">
+        <motion.div 
+          className="grid lg:grid-cols-3 gap-8 items-start"
+          variants={STAGGER_CONTAINER}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.15 }}
+        >
           {PRICING.map((p, idx) => (
-            <div 
+            <motion.div 
               key={idx} 
+              variants={FADE_UP_VARIANTS}
               className={`bg-white rounded-3xl p-8 border relative transition-all duration-300 ${
                 p.popular ? 'border-pink-400 shadow-xl ring-2 ring-pink-400/10 lg:-translate-y-4' : 'border-slate-100 shadow-sm'
               }`}
@@ -785,9 +823,9 @@ function Pricing() {
               >
                 {p.cta}
               </button>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -800,15 +838,27 @@ function Testimonials() {
   return (
     <section id="testimonials" className="py-28 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="text-center mb-16 max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-16 max-w-2xl mx-auto"
+          variants={FADE_UP_VARIANTS}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+        >
           <div className="flex justify-center"><EyebrowLabel text="References" /></div>
           <h2 className="text-4xl font-semibold text-slate-900 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Physician & Admin Feedback</h2>
           <p className="text-sm text-muted-foreground">Hear what healthcare administrators and lead clinicians say about our integrated coverage.</p>
-        </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <motion.div 
+          className="grid md:grid-cols-2 gap-8"
+          variants={STAGGER_CONTAINER}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.15 }}
+        >
           {TESTIMONIALS.map((t, idx) => (
-            <div key={idx} className="bg-slate-50/50 rounded-2xl p-8 border border-slate-100 flex flex-col justify-between h-full relative">
+            <motion.div key={idx} variants={FADE_UP_VARIANTS} className="bg-slate-50/50 rounded-2xl p-8 border border-slate-100 flex flex-col justify-between h-full relative">
               <Quote className="absolute right-6 top-6 w-10 h-10 text-pink-100/80 pointer-events-none" />
               <div>
                 <div className="flex items-center gap-1 mb-4">
@@ -828,9 +878,9 @@ function Testimonials() {
                   <p className="text-[11px] text-muted-foreground">{t.role}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -840,12 +890,17 @@ function Testimonials() {
 // CONTACT
 // ─────────────────────────────────────────────
 function Contact() {
-    return (
-    <section className="py-20 px-6 lg:px-20 bg-white">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start">
-        
+  return (
+    <section id="contact" className="py-20 px-6 lg:px-20 bg-white">
+      <motion.div 
+        className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start"
+        variants={STAGGER_CONTAINER}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.15 }}
+      >
         {/* Left Side: Text and Details */}
-        <div>
+        <motion.div variants={FADE_UP_VARIANTS}>
           <p className="text-pink-600 font-medium tracking-widest text-sm uppercase mb-4">
             ✨ Get in touch ✨
           </p>
@@ -865,12 +920,11 @@ function Contact() {
                 <p className="font-medium">hello@angelicaaljas.com</p>
               </div>
             </div>
-            {/* Dagdagan ng katulad na blocks para sa Response Time at Location */}
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Side: Form */}
-        <div className="bg-pink-50 p-8 rounded-3xl">
+        <motion.div variants={FADE_UP_VARIANTS} className="bg-pink-50 p-8 rounded-3xl">
           <form className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -899,15 +953,21 @@ function Contact() {
               Send Message 
             </button>
           </form>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
 
 function Footer() {
   return (
-    <footer className="bg-white py-12 border-t border-slate-100">
+    <motion.footer 
+      className="bg-white py-12 border-t border-slate-100"
+      variants={FADE_UP_VARIANTS}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.1 }}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-6">
         
         {/* Branding */}
@@ -943,7 +1003,7 @@ function Footer() {
         </div>
         
       </div>
-    </footer>
+    </motion.footer>
   );
 }
 
@@ -971,7 +1031,8 @@ export default function App() {
 
 return (
   <LazyMotion features={domAnimation}>
-    <div className="min-h-screen bg-slate-50 text-slate-900 antialiased font-sans">
+    <div className="relative min-h-screen bg-slate-50 text-slate-900 antialiased font-sans">
+      <FloatingBackground />
       <Nav onOpenContact={() => scrollTo("#contact")} />
       <main>
         <Hero />
