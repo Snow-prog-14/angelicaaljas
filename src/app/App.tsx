@@ -1,7 +1,6 @@
 import image_ikang from "../imports/ikang.jpg";
 import React, { useState, useEffect, useRef, FormEvent } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
 import {
   Mail, Instagram, Linkedin, Twitter,
   Star, Check, ArrowRight, Menu, X, ChevronLeft, ChevronRight,
@@ -192,11 +191,22 @@ const TESTIMONIALS = [
   },
 ];
 
-const STATS = [
-  { val: 15000, suf: "+", label: "Clinical Support Hours" },
-  { val: 5, suf: "+", label: "Years Medical Experience" },
-  { val: 100, suf: "%", label: "HIPAA Compliant Protocols" },
-  { val: 50, suf: "+", label: "Healthcare Providers Supported" },
+interface StatItem {
+  val: number;
+  suf: string;
+  label: string;
+}
+
+interface ProgressProps {
+  name: string;
+  pct: number;
+}
+
+const STATS: StatItem[] = [
+  { val: 730, suf: "+", label: "CLINICAL SUPPORT HOURS" },
+  { val: 5, suf: "+", label: "YEARS MEDICAL EXPERIENCE" },
+  { val: 100, suf: "%", label: "HIPAA COMPLIANT PROTOCOLS" },
+  { val: 2, suf: "+", label: "HEALTHCARE PROVIDERS SUPPORTED" },
 ];
 
 const BENEFITS = [
@@ -257,7 +267,7 @@ const scrollTo = (href: string) => {
 const PINK_GRAD = "linear-gradient(135deg, #ec4899 0%, #be185d 100%)";
 
 // Safe image parser helper to fix Vite development type assertion issues
-const resolveImageSrc = (imgAsset: any): string => {
+const resolveImageSrc = (imgAsset: string | { src: string } | null | undefined): string => {
   if (typeof imgAsset === 'string') return imgAsset;
   return imgAsset?.src || '';
 };
@@ -285,17 +295,26 @@ function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
     return () => clearInterval(id);
   }, [inView, target]);
   
-  return <span ref={ref}>{n.toLocaleString()}{suffix}</span>;
+  return (
+    <span ref={ref} className="inline-flex items-baseline">
+      <span>{n.toLocaleString()}</span>
+      {suffix && (
+        <span className={suffix === "%" ? "inline-block align-baseline text-[0.8em] font-sans ml-0.5" : "inline-block"}>
+          {suffix}
+        </span>
+      )}
+    </span>
+  );
 }
 
-function SkillBar({ name, pct }: { name: string; pct: number }) {
-  const ref = useRef(null);
+function SkillBar({ name, pct }: ProgressProps) {
+  const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: false, amount: 0.1 });
   return (
     <div ref={ref} className="mb-5">
-      <div className="flex justify-between mb-1.5">
-        <span className="text-sm font-medium text-foreground">{name}</span>
-        <span className="text-sm text-muted-foreground">{pct}%</span>
+      <div className="flex justify-between items-start gap-4 mb-1.5 text-xs sm:text-sm">
+        <span className="font-medium text-foreground">{name}</span>
+        <span className="text-muted-foreground shrink-0">{pct}%</span>
       </div>
       <div className="h-1.5 rounded-full bg-pink-50 overflow-hidden">
         <motion.div
@@ -353,7 +372,7 @@ function Nav({ onOpenContact }: { onOpenContact: () => void }) {
             <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground group-hover:text-pink-600 transition-colors">Medical Virtual Assistant</p>
           </button>
 
-          <div className="hidden md:flex items-center gap-7">
+          <div className="hidden lg:flex items-center gap-7">
             {NAV_LINKS.map((l) => (
               <button key={l.href} onClick={() => goto(l.href)} className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium relative group">
                 {l.label}
@@ -364,13 +383,13 @@ function Nav({ onOpenContact }: { onOpenContact: () => void }) {
 
           <button
             onClick={onOpenContact}
-            className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-pink-200/40"
+            className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-pink-200/40"
             style={{ background: PINK_GRAD }}
           >
             Schedule Consultation <ArrowRight size={14} />
           </button>
 
-          <button className="md:hidden p-2 text-foreground" onClick={() => setOpen(!open)} aria-label="Toggle menu">
+          <button className="lg:hidden p-2 text-foreground" onClick={() => setOpen(!open)} aria-label="Toggle menu">
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
@@ -383,7 +402,7 @@ function Nav({ onOpenContact }: { onOpenContact: () => void }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.22 }}
-            className="fixed top-[72px] left-0 right-0 z-40 p-6 flex flex-col gap-4 md:hidden"
+            className="fixed top-[72px] left-0 right-0 z-40 p-6 flex flex-col gap-4 lg:hidden"
             style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(236,72,153,0.2)" }}
           >
             {NAV_LINKS.map((l, i) => (
@@ -412,7 +431,7 @@ function Nav({ onOpenContact }: { onOpenContact: () => void }) {
 // HERO
 // ─────────────────────────────────────────────
 function Hero() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const blob1Y = useTransform(scrollYProgress, [0, 1], [0, -90]);
   const blob2Y = useTransform(scrollYProgress, [0, 1], [0, -50]);
@@ -511,13 +530,14 @@ function About() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid lg:grid-cols-2 gap-20 items-center mb-24">
           <motion.div
-            className="relative"
+            className="relative max-w-md mx-auto lg:max-w-none w-full"
             variants={FADE_UP_VARIANTS}
             initial="hidden"
             whileInView="visible"
-viewport={{ once: true, amount: 0.25 }}          >
+            viewport={{ once: true, amount: 0.25 }}
+          >
             <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl border-2 border-dashed pointer-events-none" style={{ borderColor: "rgba(236,72,153,0.2)" }} />
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/5]" style={{ background: "#fff5f7", boxShadow: "0 24px 60px rgba(236,72,153,0.14)" }}>
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] w-full" style={{ background: "#fff5f7", boxShadow: "0 24px 60px rgba(236,72,153,0.14)" }}>
               <img src={resolveImageSrc(image_ikang)} alt="Angelica Aljas Profile" className="w-full h-full object-cover" />
             </div>
           </motion.div>
@@ -587,11 +607,12 @@ viewport={{ once: true, amount: 0.25 }}          >
         </motion.div>
 
         <motion.div 
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 border-t border-slate-100 pt-16"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 lg:gap-8 mt-24 border-t border-slate-100 pt-16"
           variants={STAGGER_CONTAINER}
           initial="hidden"
           whileInView="visible"
-viewport={{ once: true, amount: 0.25 }}        >
+          viewport={{ once: true, amount: 0.25 }}
+        >
           {STATS.map((st, idx) => (
             <motion.div key={idx} className="text-center" variants={FADE_UP_VARIANTS}>
               <p className="text-4xl md:text-5xl font-bold text-pink-600 mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>
